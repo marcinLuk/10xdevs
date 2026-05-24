@@ -1,0 +1,19 @@
+# Secrets
+.env
+.env.docker
+.env.*
+!.env.example
+
+# IDE
+.idea/
+
+# Claude Code
+.claude/
+
+# Laravel
+vendor/
+node_modules/
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
