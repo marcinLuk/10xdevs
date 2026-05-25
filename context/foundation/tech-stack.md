@@ -16,9 +16,10 @@ hints:
   has_payments: false
   has_realtime: false
   has_ai: true
+  ai_provider: openrouter
   has_background_jobs: false
 ---
 
 ## Why this stack
 
-Laravel is the natural fit for a solo PHP developer building a full-stack web app with auth and AI-powered search under a tight 3-week after-hours timeline. It ships authentication scaffolding (Breeze/Fortify), Eloquent ORM for task persistence, and a convention-based structure that AI coding agents navigate fluently thanks to massive training-data coverage. The AI recall feature (FR-009/010) integrates via an LLM SDK querying against Eloquent-managed task history, keeping the architecture simple and the data grounded. Self-hosted deployment on a VPS with Docker keeps costs predictable and gives full control over the data layer — important given the privacy guardrail in the PRD.
+Laravel is the natural fit for a solo PHP developer building a full-stack web app with auth and AI-powered search under a tight 3-week after-hours timeline. It ships authentication scaffolding (Breeze/Fortify), Eloquent ORM for task persistence, and a convention-based structure that AI coding agents navigate fluently thanks to massive training-data coverage. The AI recall feature (FR-009/010) integrates via OpenRouter — a unified API gateway that exposes Claude and other hosted models through a single OpenAI-compatible endpoint. This keeps model-switching a configuration change rather than a code change, while the data grounding logic (matching queries to Eloquent-persisted task history) stays entirely in Laravel. Self-hosted deployment on a VPS with Docker keeps costs predictable and gives full control over the data layer — important given the privacy guardrail in the PRD.
