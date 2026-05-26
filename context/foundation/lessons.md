@@ -8,3 +8,10 @@
 - **Problem**: Without a PR, changes bypass required reviews and CI checks, risking regressions in production.
 - **Rule**: Always create a feature/fix branch and open a pull request. Direct commits to master are forbidden by branch protection.
 - **Applies to**: all
+
+## Always register new routes inside the existing auth middleware group
+
+- **Context**: routes/web.php — adding new controller routes for authenticated features.
+- **Problem**: Task routes were registered with inline ->middleware('auth') outside the existing Route::middleware('auth')->group(), creating inconsistency and risk of forgetting middleware on future routes.
+- **Rule**: When adding new authenticated routes, place them inside the existing Route::middleware('auth')->group() block rather than using inline ->middleware() calls.
+- **Applies to**: routes/web.php, any new route registration
