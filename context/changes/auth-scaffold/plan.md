@@ -346,29 +346,29 @@ Confirm the existing `resources/views/welcome.blade.php` integrates cleanly with
 
 #### Automated
 
-- [x] 2.1 Pest suite still green: `composer test` exits 0
-- [x] 2.2 Lint clean: `./vendor/bin/pint --test` exits 0
-- [x] 2.3 No stripped routes leak: `php artisan route:list | grep -E "password\.|verification\."` returns no rows
-- [x] 2.4 Fresh migration works: `php artisan migrate:fresh` exits 0
-- [x] 2.5 Fresh schema is correct: `password_reset_tokens` is absent from `db:show --counts`
+- [x] 2.1 Pest suite still green: `composer test` exits 0 — 133deff
+- [x] 2.2 Lint clean: `./vendor/bin/pint --test` exits 0 — 133deff
+- [x] 2.3 No stripped routes leak: `php artisan route:list | grep -E "password\.|verification\."` returns no rows — 133deff
+- [x] 2.4 Fresh migration works: `php artisan migrate:fresh` exits 0 — 133deff
+- [x] 2.5 Fresh schema is correct: `password_reset_tokens` is absent from `db:show --counts` — 133deff
 
 #### Manual
 
-- [x] 2.6 `User::class` no longer mentions `MustVerifyEmail` anywhere in the app
-- [x] 2.7 Visiting `/forgot-password` returns 404
-- [x] 2.8 Visiting `/email/verify` returns 404
-- [x] 2.9 Visiting `/register` still works and creates an account that lands on `/dashboard` (no verification interception)
+- [x] 2.6 `User::class` no longer mentions `MustVerifyEmail` anywhere in the app — 133deff
+- [x] 2.7 Visiting `/forgot-password` returns 404 — 133deff
+- [x] 2.8 Visiting `/email/verify` returns 404 — 133deff
+- [x] 2.9 Visiting `/register` still works and creates an account that lands on `/dashboard` (no verification interception) — 133deff
 
 ### Phase 3: Wire to welcome page + final verification
 
 #### Automated
 
-- [ ] 3.1 Full test suite green: `composer test` exits 0
-- [ ] 3.2 Lint clean: `./vendor/bin/pint` shows no pending changes
-- [ ] 3.3 `php artisan route:list` final state: shows only `register`, `login`, `logout`, `dashboard`, `profile.*`
+- [x] 3.1 Full test suite green: `composer test` exits 0
+- [x] 3.2 Lint clean: `./vendor/bin/pint` shows no pending changes
+- [x] 3.3 `php artisan route:list` final state: shows only `register`, `login`, `logout`, `dashboard`, `profile.*`
 
 #### Manual
 
-- [ ] 3.4 Cold-start smoke flow: register → dashboard → logout → login → dashboard → profile password change works
-- [ ] 3.5 Stripped URLs return 404 (`/forgot-password`, `/email/verify`)
+- [x] 3.4 Cold-start smoke flow: register → dashboard → logout → login → dashboard → profile password change works
+- [x] 3.5 Stripped URLs return 404 (`/forgot-password`, `/email/verify`)
 - [ ] 3.6 PR opened against `master`; CI green
