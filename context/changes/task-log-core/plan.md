@@ -381,26 +381,26 @@ table foreign key.
 
 #### Automated
 
-- [x] 1.1 Migration applies cleanly
-- [x] 1.2 Migration rollback works
-- [x] 1.3 Factory produces valid record in tinker
-- [x] 1.4 Existing test suite passes
+- [x] 1.1 Migration applies cleanly — e3bfe5e
+- [x] 1.2 Migration rollback works — e3bfe5e
+- [x] 1.3 Factory produces valid record in tinker — e3bfe5e
+- [x] 1.4 Existing test suite passes — e3bfe5e
 
 #### Manual
 
-- [x] 1.5 tasks table exists with correct columns and indices
+- [x] 1.5 tasks table exists with correct columns and indices — e3bfe5e
 
 ### Phase 2: Backend Logic
 
 #### Automated
 
-- [ ] 2.1 Route list shows TaskController routes
-- [ ] 2.2 Existing test suite passes
-- [ ] 2.3 Named routes resolve without collision
+- [x] 2.1 Route list shows TaskController routes
+- [x] 2.2 Existing test suite passes
+- [x] 2.3 Named routes resolve without collision
 
 #### Manual
 
-- [ ] 2.4 Dashboard loads without errors when logged in
+- [x] 2.4 Dashboard loads without errors when logged in
 
 ### Phase 3: Frontend Views
 
