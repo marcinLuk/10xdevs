@@ -30,6 +30,33 @@ npm run dev
 npm run build
 ```
 
+## Artisan CLI — first-class tool for file generation
+
+**Always prefer `php artisan make:*` over manually creating files.** Before writing any Laravel class by hand, check whether an Artisan generator exists for it.
+
+Common generators:
+
+| Task | Command |
+| --- | --- |
+| Controller | `php artisan make:controller NameController` |
+| Model (+ migration) | `php artisan make:model Name -m` |
+| Migration | `php artisan make:migration create_name_table` |
+| Middleware | `php artisan make:middleware NameMiddleware` |
+| Request (Form Request) | `php artisan make:request NameRequest` |
+| Seeder | `php artisan make:seeder NameSeeder` |
+| Factory | `php artisan make:factory NameFactory` |
+| Job | `php artisan make:job NameJob` |
+| Event / Listener | `php artisan make:event Name` / `php artisan make:listener Name` |
+| Mail | `php artisan make:mail NameMail` |
+| Notification | `php artisan make:notification NameNotification` |
+| Policy | `php artisan make:policy NamePolicy` |
+| Resource (API) | `php artisan make:resource NameResource` |
+| Command | `php artisan make:command NameCommand` |
+| Service Provider | `php artisan make:provider NameServiceProvider` |
+| Test | `php artisan make:test NameTest` |
+
+Run `php artisan list make` to see the full up-to-date list. When unsure, check that list before creating any file manually.
+
 ## Architecture
 
 **Entry points:**
