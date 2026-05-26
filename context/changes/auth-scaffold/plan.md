@@ -363,12 +363,12 @@ Confirm the existing `resources/views/welcome.blade.php` integrates cleanly with
 
 #### Automated
 
-- [x] 3.1 Full test suite green: `composer test` exits 0
-- [x] 3.2 Lint clean: `./vendor/bin/pint` shows no pending changes
-- [x] 3.3 `php artisan route:list` final state: shows only `register`, `login`, `logout`, `dashboard`, `profile.*`
+- [x] 3.1 Full test suite green: `composer test` exits 0 — 7d8ebc0
+- [x] 3.2 Lint clean: `./vendor/bin/pint` shows no pending changes — 7d8ebc0
+- [x] 3.3 `php artisan route:list` final state: shows only `register`, `login`, `logout`, `dashboard`, `profile.*` — 7d8ebc0
 
 #### Manual
 
-- [x] 3.4 Cold-start smoke flow: register → dashboard → logout → login → dashboard → profile password change works
-- [x] 3.5 Stripped URLs return 404 (`/forgot-password`, `/email/verify`)
-- [ ] 3.6 PR opened against `master`; CI green
+- [x] 3.4 Cold-start smoke flow: register → dashboard → logout → login → dashboard → profile password change works — 7d8ebc0
+- [x] 3.5 Stripped URLs return 404 (`/forgot-password`, `/email/verify`) — 7d8ebc0
+- [x] 3.6 PR opened against `master`; CI green
