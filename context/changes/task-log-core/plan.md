@@ -394,31 +394,31 @@ table foreign key.
 
 #### Automated
 
-- [x] 2.1 Route list shows TaskController routes
-- [x] 2.2 Existing test suite passes
-- [x] 2.3 Named routes resolve without collision
+- [x] 2.1 Route list shows TaskController routes — 6fd4424
+- [x] 2.2 Existing test suite passes — 6fd4424
+- [x] 2.3 Named routes resolve without collision — 6fd4424
 
 #### Manual
 
-- [x] 2.4 Dashboard loads without errors when logged in
+- [x] 2.4 Dashboard loads without errors when logged in — 6fd4424
 
 ### Phase 3: Frontend Views
 
 #### Automated
 
-- [ ] 3.1 Existing tests pass
-- [ ] 3.2 Vite build succeeds
+- [x] 3.1 Existing tests pass
+- [x] 3.2 Vite build succeeds
 
 #### Manual
 
-- [ ] 3.3 Empty state displays when no tasks
-- [ ] 3.4 Add task modal opens and submits
-- [ ] 3.5 Task with preset type appears with badge
-- [ ] 3.6 Task with custom type stores correctly
-- [ ] 3.7 Task with no type displays without badge
-- [ ] 3.8 Validation errors shown in modal
-- [ ] 3.9 Pagination works with 20+ tasks
-- [ ] 3.10 Flash message appears and clears
+- [x] 3.3 Empty state displays when no tasks
+- [x] 3.4 Add task modal opens and submits
+- [x] 3.5 Task with preset type appears with badge
+- [x] 3.6 Task with custom type stores correctly
+- [x] 3.7 Task with no type displays without badge
+- [x] 3.8 Validation errors shown in modal
+- [x] 3.9 Pagination works with 20+ tasks
+- [x] 3.10 Flash message appears and clears
 
 ### Phase 4: Testing
 

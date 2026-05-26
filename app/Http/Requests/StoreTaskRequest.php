@@ -12,6 +12,19 @@ class StoreTaskRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation(): void
+    {
+        $typeChoice = $this->input('type_choice', '');
+
+        $type = match ($typeChoice) {
+            '__custom__' => $this->input('custom_type', ''),
+            '' => null,
+            default => $typeChoice,
+        };
+
+        $this->merge(['type' => $type ?: null]);
+    }
+
     /**
      * @return array<string, ValidationRule|array<mixed>|string>
      */
