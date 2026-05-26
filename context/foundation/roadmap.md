@@ -1,6 +1,6 @@
 ---
 project: GardenLog
-version: 2
+version: 3
 status: draft
 created: 2026-05-25
 updated: 2026-05-26
@@ -36,9 +36,9 @@ their own history. Success means the AI recall loop works reliably — no invent
 | ID   | Change ID        | Outcome (user can …)                                                         | Prerequisites | PRD refs               | Status   |
 |------|------------------|------------------------------------------------------------------------------|---------------|------------------------|----------|
 | F-01 | auth-scaffold    | (foundation) register, log in, and log out                                   | —             | FR-001, FR-002, FR-003 | done     |
-| S-01 | task-log-core    | add a task and view it in the chronological list                             | F-01          | FR-004, FR-005, FR-006 | ready    |
-| S-02 | ai-recall-loop   | ask the AI about their task history and get a grounded, date-specific answer | S-01          | FR-009, FR-010, US-01  | proposed |
-| S-03 | task-edit-delete | edit or delete a saved task                                                  | S-01          | FR-007, FR-008         | proposed |
+| S-01 | task-log-core    | add a task and view it in the chronological list                             | F-01          | FR-004, FR-005, FR-006 | done     |
+| S-02 | ai-recall-loop   | ask the AI about their task history and get a grounded, date-specific answer | S-01          | FR-009, FR-010, US-01  | ready    |
+| S-03 | task-edit-delete | edit or delete a saved task                                                  | S-01          | FR-007, FR-008         | ready    |
 
 ## Streams
 
@@ -57,9 +57,9 @@ Foundations below assume these are present and do NOT re-scaffold them.
 
 - **Frontend:** Present — Vite + Tailwind CSS v3 + Alpine.js wired; `resources/views/dashboard.blade.php` (custom);
   Breeze auth/profile views in place
-- **Backend / API:** Partial — auth + profile routes only (`routes/web.php`, `routes/auth.php`); no domain controllers,
-  services, or `api.php`
-- **Data:** Absent (domain) — default Laravel tables only (`users`, `cache`, `jobs`); no `tasks` migration or model
+- **Backend / API:** Present — auth + profile + task routes (`routes/web.php`, `routes/auth.php`); `TaskController` with
+  index and store actions; no `api.php`
+- **Data:** Present (domain) — `tasks` table with migration, Task model, TaskFactory; user-scoped with composite index
 - **Auth:** Present — Laravel Breeze fully installed and wired; auth routes + middleware active; dashboard and profile
   routes gated behind `auth` middleware
 - **Deploy / infra:** Partial — Docker (`docker-compose.yml` + `Dockerfile.local`) and Railway (`railway.json`)
@@ -99,7 +99,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Unknowns:** —
 - **Risk:** Standard CRUD on a new `tasks` table. Sequenced immediately after auth so task data is scoped to the user
   and available for the AI recall slice. Skipping this means S-02 has no real data to query against.
-- **Status:** ready
+- **Status:** done
 
 ### S-02: AI recall loop
 
@@ -118,7 +118,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Risk:** The grounding NFRs ("AI never returns data not in history", "response within 5 seconds") are the riskiest
   acceptance criteria in the PRD. Sequenced after S-01 so real task data is available for end-to-end testing; the
   Unknown is low-risk because context injection is a well-understood pattern.
-- **Status:** proposed
+- **Status:** ready
 
 ### S-03: Task editing and deletion
 
@@ -131,16 +131,16 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Unknowns:** —
 - **Risk:** Standard CRUD operations on an existing entity. Marked parallel with S-02 to maximise throughput given
   capacity is the top blocker; an AI agent can work on this while another handles S-02.
-- **Status:** proposed
+- **Status:** ready
 
 ## Backlog Handoff
 
 | Roadmap ID | Change ID        | Suggested issue title                                     | Ready for `/10x-plan` | Notes                               |
 |------------|------------------|-----------------------------------------------------------|-----------------------|-------------------------------------|
 | F-01       | auth-scaffold    | Auth scaffold: register, login, logout via Laravel Breeze | done                  | Merged — no planning needed         |
-| S-01       | task-log-core    | Task log: add task + chronological list view              | yes                   | Run `/10x-plan task-log-core`       |
-| S-02       | ai-recall-loop   | AI recall: natural-language query → grounded answer       | no                    | Needs S-01 done first               |
-| S-03       | task-edit-delete | Task CRUD: edit and delete saved tasks                    | no                    | Needs S-01 done; parallel with S-02 |
+| S-01       | task-log-core    | Task log: add task + chronological list view              | done                  | Implemented — PR #16                |
+| S-02       | ai-recall-loop   | AI recall: natural-language query → grounded answer       | yes                   | Run `/10x-plan ai-recall-loop`      |
+| S-03       | task-edit-delete | Task CRUD: edit and delete saved tasks                    | yes                   | Run `/10x-plan task-edit-delete`; parallel with S-02 |
 
 ## Open Roadmap Questions
 
@@ -160,3 +160,4 @@ None. PRD carried no unresolved open questions at time of generation.
 ## Done
 
 - **F-01: Auth scaffold** — Archived — `context/changes/auth-scaffold/`. Lesson: —.
+- **S-01: Task log core** — Implemented — `context/changes/task-log-core/`. PR #16. Lesson: —.

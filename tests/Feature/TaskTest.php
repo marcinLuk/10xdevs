@@ -59,6 +59,25 @@ test('authenticated user can create a task without type', function () {
     ]);
 });
 
+test('authenticated user can create a task with custom type', function () {
+    $user = User::factory()->create();
+
+    $this->actingAs($user)
+        ->post('/tasks', [
+            'description' => 'Pruned the hedge',
+            'task_date' => now()->format('Y-m-d'),
+            'type_choice' => '__custom__',
+            'custom_type' => 'pruning',
+        ])
+        ->assertRedirect(route('dashboard'));
+
+    $this->assertDatabaseHas('tasks', [
+        'user_id' => $user->id,
+        'description' => 'Pruned the hedge',
+        'type' => 'pruning',
+    ]);
+});
+
 test('task creation validates required fields', function () {
     $user = User::factory()->create();
 
