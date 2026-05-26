@@ -406,27 +406,27 @@ table foreign key.
 
 #### Automated
 
-- [x] 3.1 Existing tests pass
-- [x] 3.2 Vite build succeeds
+- [x] 3.1 Existing tests pass — fac9dce
+- [x] 3.2 Vite build succeeds — fac9dce
 
 #### Manual
 
-- [x] 3.3 Empty state displays when no tasks
-- [x] 3.4 Add task modal opens and submits
-- [x] 3.5 Task with preset type appears with badge
-- [x] 3.6 Task with custom type stores correctly
-- [x] 3.7 Task with no type displays without badge
-- [x] 3.8 Validation errors shown in modal
-- [x] 3.9 Pagination works with 20+ tasks
-- [x] 3.10 Flash message appears and clears
+- [x] 3.3 Empty state displays when no tasks — fac9dce
+- [x] 3.4 Add task modal opens and submits — fac9dce
+- [x] 3.5 Task with preset type appears with badge — fac9dce
+- [x] 3.6 Task with custom type stores correctly — fac9dce
+- [x] 3.7 Task with no type displays without badge — fac9dce
+- [x] 3.8 Validation errors shown in modal — fac9dce
+- [x] 3.9 Pagination works with 20+ tasks — fac9dce
+- [x] 3.10 Flash message appears and clears — fac9dce
 
 ### Phase 4: Testing
 
 #### Automated
 
-- [ ] 4.1 Full test suite green
-- [ ] 4.2 Code style passes (Pint)
+- [x] 4.1 Full test suite green
+- [x] 4.2 Code style passes (Pint)
 
 #### Manual
 
-- [ ] 4.3 Test coverage reviewed — all FR paths exercised
+- [x] 4.3 Test coverage reviewed — all FR paths exercised

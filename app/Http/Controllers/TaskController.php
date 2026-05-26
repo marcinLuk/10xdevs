@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
-use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class TaskController extends Controller
 {
