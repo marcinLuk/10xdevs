@@ -381,14 +381,14 @@ table foreign key.
 
 #### Automated
 
-- [ ] 1.1 Migration applies cleanly
-- [ ] 1.2 Migration rollback works
-- [ ] 1.3 Factory produces valid record in tinker
-- [ ] 1.4 Existing test suite passes
+- [x] 1.1 Migration applies cleanly
+- [x] 1.2 Migration rollback works
+- [x] 1.3 Factory produces valid record in tinker
+- [x] 1.4 Existing test suite passes
 
 #### Manual
 
-- [ ] 1.5 tasks table exists with correct columns and indices
+- [x] 1.5 tasks table exists with correct columns and indices
 
 ### Phase 2: Backend Logic
 

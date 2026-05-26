@@ -1,7 +1,7 @@
 ---
 change_id: task-log-core
 title: Task log core
-status: planned
+status: implementing
 created: 2026-05-26
 updated: 2026-05-26
 archived_at: null
