@@ -424,9 +424,9 @@ table foreign key.
 
 #### Automated
 
-- [x] 4.1 Full test suite green
-- [x] 4.2 Code style passes (Pint)
+- [x] 4.1 Full test suite green — 03d94cd
+- [x] 4.2 Code style passes (Pint) — 03d94cd
 
 #### Manual
 
-- [x] 4.3 Test coverage reviewed — all FR paths exercised
+- [x] 4.3 Test coverage reviewed — all FR paths exercised — 03d94cd
