@@ -327,37 +327,37 @@ Confirm the existing `resources/views/welcome.blade.php` integrates cleanly with
 
 #### Automated
 
-- [x] 1.1 Composer install completes: `composer install` exits 0
-- [x] 1.2 Breeze install completes: `php artisan breeze:install blade --pest` exits 0
-- [x] 1.3 Migrations apply cleanly: `php artisan migrate` exits 0
-- [x] 1.4 Frontend builds: `npm install && npm run build` exit 0
-- [x] 1.5 Pest suite passes (hard gate): `composer test` exits 0 and the output banner reads "Pest" (not "PHPUnit")
-- [x] 1.6 Lint clean: `./vendor/bin/pint --test` exits 0
-- [x] 1.7 Routes present: `php artisan route:list` includes `register`, `login`, `logout`, `dashboard`
-- [x] 1.8 Auth routes live in `routes/auth.php`: file exists AND `routes/web.php` requires it
+- [x] 1.1 Composer install completes: `composer install` exits 0 — 6a4368c
+- [x] 1.2 Breeze install completes: `php artisan breeze:install blade --pest` exits 0 — 6a4368c
+- [x] 1.3 Migrations apply cleanly: `php artisan migrate` exits 0 — 6a4368c
+- [x] 1.4 Frontend builds: `npm install && npm run build` exit 0 — 6a4368c
+- [x] 1.5 Pest suite passes (hard gate): `composer test` exits 0 and the output banner reads "Pest" (not "PHPUnit") — 6a4368c
+- [x] 1.6 Lint clean: `./vendor/bin/pint --test` exits 0 — 6a4368c
+- [x] 1.7 Routes present: `php artisan route:list` includes `register`, `login`, `logout`, `dashboard` — 6a4368c
+- [x] 1.8 Auth routes live in `routes/auth.php`: file exists AND `routes/web.php` requires it — 6a4368c
 
 #### Manual
 
-- [x] 1.9 Dev server starts: `composer dev` boots without errors
-- [x] 1.10 Browser smoke test: `/register`, `/login`, submit valid credentials → `/dashboard`; logout → `/`
-- [x] 1.11 Pest is the test runner: `composer test` output shows the Pest ASCII banner and uses Pest `it()/test()` syntax in `tests/Feature/Auth/`
+- [x] 1.9 Dev server starts: `composer dev` boots without errors — 6a4368c
+- [x] 1.10 Browser smoke test: `/register`, `/login`, submit valid credentials → `/dashboard`; logout → `/` — 6a4368c
+- [x] 1.11 Pest is the test runner: `composer test` output shows the Pest ASCII banner and uses Pest `it()/test()` syntax in `tests/Feature/Auth/` — 6a4368c
 
 ### Phase 2: Trim scope (remove verify, reset, confirm)
 
 #### Automated
 
-- [ ] 2.1 Pest suite still green: `composer test` exits 0
-- [ ] 2.2 Lint clean: `./vendor/bin/pint --test` exits 0
-- [ ] 2.3 No stripped routes leak: `php artisan route:list | grep -E "password\.|verification\."` returns no rows
-- [ ] 2.4 Fresh migration works: `php artisan migrate:fresh` exits 0
-- [ ] 2.5 Fresh schema is correct: `password_reset_tokens` is absent from `db:show --counts`
+- [x] 2.1 Pest suite still green: `composer test` exits 0
+- [x] 2.2 Lint clean: `./vendor/bin/pint --test` exits 0
+- [x] 2.3 No stripped routes leak: `php artisan route:list | grep -E "password\.|verification\."` returns no rows
+- [x] 2.4 Fresh migration works: `php artisan migrate:fresh` exits 0
+- [x] 2.5 Fresh schema is correct: `password_reset_tokens` is absent from `db:show --counts`
 
 #### Manual
 
-- [ ] 2.6 `User::class` no longer mentions `MustVerifyEmail` anywhere in the app
-- [ ] 2.7 Visiting `/forgot-password` returns 404
-- [ ] 2.8 Visiting `/email/verify` returns 404
-- [ ] 2.9 Visiting `/register` still works and creates an account that lands on `/dashboard` (no verification interception)
+- [x] 2.6 `User::class` no longer mentions `MustVerifyEmail` anywhere in the app
+- [x] 2.7 Visiting `/forgot-password` returns 404
+- [x] 2.8 Visiting `/email/verify` returns 404
+- [x] 2.9 Visiting `/register` still works and creates an account that lands on `/dashboard` (no verification interception)
 
 ### Phase 3: Wire to welcome page + final verification
 
