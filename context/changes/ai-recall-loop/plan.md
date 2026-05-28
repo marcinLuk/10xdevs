@@ -396,16 +396,16 @@ No database migrations needed — this feature adds no new tables or columns. Th
 
 #### Automated
 
-- [ ] 1.1 composer install succeeds with Prism PHP
-- [ ] 1.2 config/prism.php exists after publish
-- [ ] 1.3 AiRecallService resolves from container
-- [ ] 1.4 Pint passes on new files
-- [ ] 1.5 composer test passes (no regressions)
+- [x] 1.1 composer install succeeds with Prism PHP
+- [x] 1.2 config/prism.php exists after publish
+- [x] 1.3 AiRecallService resolves from container
+- [x] 1.4 Pint passes on new files
+- [x] 1.5 composer test passes (no regressions)
 
 #### Manual
 
-- [ ] 1.6 .env.example contains new env vars with defaults
-- [ ] 1.7 Blade prompt template renders correctly with sample data
+- [x] 1.6 .env.example contains new env vars with defaults
+- [x] 1.7 Blade prompt template renders correctly with sample data
 
 ### Phase 2: Route, Controller & Validation
 
