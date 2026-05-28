@@ -243,37 +243,37 @@ No performance impact — standard single-row UPDATE/DELETE queries on an indexe
 
 #### Automated
 
-- [ ] 1.1 `docker exec gardenlog-app php artisan route:list` shows PUT and DELETE task routes
-- [ ] 1.2 `docker exec gardenlog-app php artisan test --filter=TaskTest` passes (existing tests green)
+- [x] 1.1 `docker exec gardenlog-app php artisan route:list` shows PUT and DELETE task routes — 6436bea
+- [x] 1.2 `docker exec gardenlog-app php artisan test --filter=TaskTest` passes (existing tests green) — 6436bea
 
 #### Manual
 
-- [ ] 1.3 PUT /tasks/{id} with valid data updates the task
-- [ ] 1.4 DELETE /tasks/{id} removes the task
-- [ ] 1.5 Modifying another user's task returns 403
+- [x] 1.3 PUT /tasks/{id} with valid data updates the task — 6436bea
+- [x] 1.4 DELETE /tasks/{id} removes the task — 6436bea
+- [x] 1.5 Modifying another user's task returns 403 — 6436bea
 
 ### Phase 2: Frontend — Edit Modal, Delete Modal & Task Card Actions
 
 #### Automated
 
-- [ ] 2.1 `docker exec gardenlog-app php artisan test` passes (no regressions)
-- [ ] 2.2 `docker exec gardenlog-app npx vite build` completes without errors
+- [x] 2.1 `docker exec gardenlog-app php artisan test` passes (no regressions) — fcbc4c8
+- [x] 2.2 `docker exec gardenlog-app npx vite build` completes without errors — fcbc4c8
 
 #### Manual
 
-- [ ] 2.3 Task cards show pencil and trash icon buttons
-- [ ] 2.4 Edit modal opens with correct pre-filled data
-- [ ] 2.5 Submitting edit updates task and shows success flash
-- [ ] 2.6 Delete confirmation modal works and removes task
-- [ ] 2.7 Type dropdown works correctly in edit modal
+- [x] 2.3 Task cards show pencil and trash icon buttons — fcbc4c8
+- [x] 2.4 Edit modal opens with correct pre-filled data — fcbc4c8
+- [x] 2.5 Submitting edit updates task and shows success flash — fcbc4c8
+- [x] 2.6 Delete confirmation modal works and removes task — fcbc4c8
+- [x] 2.7 Type dropdown works correctly in edit modal — fcbc4c8
 
 ### Phase 3: Tests
 
 #### Automated
 
-- [ ] 3.1 `docker exec gardenlog-app php artisan test --filter=TaskTest` — all new tests pass
-- [ ] 3.2 `docker exec gardenlog-app ./vendor/bin/pint --test` — code style passes
+- [x] 3.1 `docker exec gardenlog-app php artisan test --filter=TaskTest` — all new tests pass — 746252e
+- [x] 3.2 `docker exec gardenlog-app ./vendor/bin/pint --test` — code style passes — 746252e
 
 #### Manual
 
-- [ ] 3.3 Review test output — all test names are descriptive and cover intended scenarios
+- [x] 3.3 Review test output — all test names are descriptive and cover intended scenarios — 746252e

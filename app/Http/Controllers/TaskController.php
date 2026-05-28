@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
+use App\Models\Task;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -21,5 +23,23 @@ class TaskController extends Controller
         $request->user()->tasks()->create($request->validated());
 
         return redirect()->route('dashboard')->with('success', 'Task added successfully.');
+    }
+
+    public function update(UpdateTaskRequest $request, Task $task): RedirectResponse
+    {
+        $this->authorize('update', $task);
+
+        $task->update($request->validated());
+
+        return redirect()->route('dashboard')->with('success', 'Task updated successfully.');
+    }
+
+    public function destroy(Request $request, Task $task): RedirectResponse
+    {
+        $this->authorize('delete', $task);
+
+        $task->delete();
+
+        return redirect()->route('dashboard')->with('success', 'Task deleted successfully.');
     }
 }

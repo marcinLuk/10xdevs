@@ -159,3 +159,116 @@ test('flash message appears after successful task creation', function () {
         ])
         ->assertSessionHas('success', 'Task added successfully.');
 });
+
+// --- Update tests ---
+
+test('user can update own task', function () {
+    $user = User::factory()->create();
+    $task = Task::factory()->for($user)->create([
+        'description' => 'Old description',
+        'task_date' => now()->subDay(),
+        'type' => 'watering',
+    ]);
+
+    $this->actingAs($user)
+        ->put("/tasks/{$task->id}", [
+            'description' => 'Updated description',
+            'task_date' => now()->format('Y-m-d'),
+            'type_choice' => 'fertilizing',
+        ])
+        ->assertRedirect(route('dashboard'));
+
+    $this->assertDatabaseHas('tasks', [
+        'id' => $task->id,
+        'description' => 'Updated description',
+        'type' => 'fertilizing',
+    ]);
+});
+
+test('user cannot update another users task', function () {
+    $owner = User::factory()->create();
+    $other = User::factory()->create();
+    $task = Task::factory()->for($owner)->create();
+
+    $this->actingAs($other)
+        ->put("/tasks/{$task->id}", [
+            'description' => 'Hijacked',
+            'task_date' => now()->format('Y-m-d'),
+            'type_choice' => '',
+        ])
+        ->assertForbidden();
+});
+
+test('update validates required fields', function () {
+    $user = User::factory()->create();
+    $task = Task::factory()->for($user)->create();
+
+    $this->actingAs($user)
+        ->put("/tasks/{$task->id}", [
+            'description' => '',
+            'task_date' => '',
+        ])
+        ->assertSessionHasErrors(['description', 'task_date']);
+});
+
+test('update rejects future date', function () {
+    $user = User::factory()->create();
+    $task = Task::factory()->for($user)->create();
+
+    $this->actingAs($user)
+        ->put("/tasks/{$task->id}", [
+            'description' => 'Some task',
+            'task_date' => now()->addDay()->format('Y-m-d'),
+            'type_choice' => '',
+        ])
+        ->assertSessionHasErrors('task_date');
+});
+
+test('guest cannot update task', function () {
+    $task = Task::factory()->for(User::factory())->create();
+
+    $this->put("/tasks/{$task->id}", [
+        'description' => 'Hijacked',
+        'task_date' => now()->format('Y-m-d'),
+        'type_choice' => '',
+    ])->assertRedirect('/login');
+});
+
+// --- Delete tests ---
+
+test('user can delete own task', function () {
+    $user = User::factory()->create();
+    $task = Task::factory()->for($user)->create();
+
+    $this->actingAs($user)
+        ->delete("/tasks/{$task->id}")
+        ->assertRedirect(route('dashboard'));
+
+    $this->assertDatabaseMissing('tasks', ['id' => $task->id]);
+});
+
+test('user cannot delete another users task', function () {
+    $owner = User::factory()->create();
+    $other = User::factory()->create();
+    $task = Task::factory()->for($owner)->create();
+
+    $this->actingAs($other)
+        ->delete("/tasks/{$task->id}")
+        ->assertForbidden();
+});
+
+test('guest cannot delete task', function () {
+    $task = Task::factory()->for(User::factory())->create();
+
+    $this->delete("/tasks/{$task->id}")
+        ->assertRedirect('/login');
+});
+
+test('delete shows success flash', function () {
+    $user = User::factory()->create();
+    $task = Task::factory()->for($user)->create();
+
+    $this->actingAs($user)
+        ->delete("/tasks/{$task->id}")
+        ->assertSessionHas('success', 'Task deleted successfully.');
+});
