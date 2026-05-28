@@ -1,6 +1,6 @@
 ---
 project: GardenLog
-version: 4
+version: 5
 status: draft
 created: 2026-05-25
 updated: 2026-05-28
@@ -33,27 +33,44 @@ their own history. Success means the AI recall loop works reliably — no invent
 
 ## At a glance
 
-| ID   | Change ID        | Outcome (user can …)                                                         | Prerequisites | PRD refs               | Status   |
-|------|------------------|------------------------------------------------------------------------------|---------------|------------------------|----------|
-| F-01 | auth-scaffold    | (foundation) register, log in, and log out                                   | —             | FR-001, FR-002, FR-003 | done     |
-| S-01 | task-log-core    | add a task and view it in the chronological list                             | F-01          | FR-004, FR-005, FR-006 | done     |
-| S-02 | ai-recall-loop   | ask the AI about their task history and get a grounded, date-specific answer | S-01          | FR-009, FR-010, US-01  | ready    |
-| S-03 | task-edit-delete | edit or delete a saved task                                                  | S-01          | FR-007, FR-008         | ready    |
-| S-04 | ai-search-ux     | get inline validation feedback for searchbar                                 | S-02          | UX polish              | ready    |
-| S-05 | branding-nav     | see a GardenLog logo instead of the Laravel logo; nav has no redundant link  | F-01          | UX polish              | ready    |
-| S-06 | welcome-page     | land on a clean, light welcome page with a branded card and auth actions     | F-01          | UX polish              | ready    |
+| ID   | Change ID        | Outcome (user can …)                                                         | Prerequisites | PRD refs               | Status   | Wave |
+|------|------------------|------------------------------------------------------------------------------|---------------|------------------------|----------|------|
+| F-01 | auth-scaffold    | (foundation) register, log in, and log out                                   | —             | FR-001, FR-002, FR-003 | done     | —    |
+| S-01 | task-log-core    | add a task and view it in the chronological list                             | F-01          | FR-004, FR-005, FR-006 | done     | —    |
+| S-02 | ai-recall-loop   | ask the AI about their task history and get a grounded, date-specific answer | S-01          | FR-009, FR-010, US-01  | done     | —    |
+| S-03 | task-edit-delete | edit or delete a saved task                                                  | S-01          | FR-007, FR-008         | planned  | 1    |
+| S-05 | branding-nav     | see a GardenLog logo instead of the Laravel logo; green theme across all UI  | F-01          | UX polish              | planned  | 1    |
+| S-06 | welcome-page     | land on a clean, light welcome page with a branded card and auth actions     | F-01          | UX polish              | planned  | 1    |
+| S-04 | ai-search-ux     | get inline validation feedback and UX polish for AI searchbar                | S-02, S-03†   | UX polish              | planned  | 2    |
 
-> S-04, S-05, S-06 are fully independent of each other and can run in parallel across three worktrees.
+> **† File conflict:** S-04 and S-03 both modify `TaskController.php` (different methods, same file). S-04 must merge
+> after S-03 to avoid a manual merge conflict.
+
+### Parallel execution plan
+
+```
+Wave 1 — 3 worktrees równolegle:
+  ├─ worktree A: S-03 task-edit-delete  ──► PR
+  ├─ worktree B: S-05 branding-nav      ──► PR
+  └─ worktree C: S-06 welcome-page      ──► PR
+
+Wave 2 — po merge S-03:
+  └─ worktree D: S-04 ai-search-ux      ──► PR
+```
+
+Zero file conflicts within Wave 1 — all three touch completely disjoint file sets. S-04 is small (1 phase + tests)
+and lands quickly once S-03 is merged.
 
 ## Streams
 
 Navigation aid — groups items that share a Prerequisites chain. Canonical ordering still lives in the dependency graph
 below; this table is the proposed reading order across parallel tracks.
 
-| Stream | Theme              | Chain                     | Note                                                                                                             |
-|--------|--------------------|---------------------------|------------------------------------------------------------------------------------------------------------------|
-| A      | Auth & recall path | `F-01` → `S-01` → `S-02`  | The must-have path — the sequence through all PRD must-have features — biased for `main_goal: speed`; validates the north star. |
-| B      | Task CRUD          | `S-01` → `S-03`           | Branches from `S-01`; parallel with `S-02` — maximises throughput given `capacity` is the top blocker.          |
+| Stream | Theme              | Chain                              | Note                                                                                                             |
+|--------|--------------------|-------------------------------------|------------------------------------------------------------------------------------------------------------------|
+| A      | Auth & recall path | `F-01` → `S-01` → `S-02` → `S-04` | The must-have path through all PRD features + UX polish. S-04 also waits for S-03 (file conflict).              |
+| B      | Task CRUD          | `S-01` → `S-03`                    | Branches from `S-01`; parallel with S-05/S-06 in Wave 1.                                                        |
+| C      | UX polish          | `F-01` → `S-05`, `S-06`            | Independent of Streams A/B. Both run in Wave 1; S-05 replaces logo that S-06 consumes (soft dep, no conflict).   |
 
 ## Baseline
 
@@ -116,14 +133,9 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Prerequisites:** S-01
 - **Parallel with:** S-03
 - **Blockers:** —
-- **Unknowns:**
-  - How should the AI provider prompt be structured to ensure responses are drawn exclusively from the user's task
-    history and never invent dates or events? — Owner: developer. Block: no (context injection — passing task history
-    as context to the AI provider — is a well-understood integration pattern; can be decided at plan time).
-- **Risk:** The grounding NFRs ("AI never returns data not in history", "response within 5 seconds") are the riskiest
-  acceptance criteria in the PRD. Sequenced after S-01 so real task data is available for end-to-end testing; the
-  Unknown is low-risk because context injection is a well-understood pattern.
-- **Status:** ready
+- **Unknowns:** —
+- **Risk:** Resolved — context injection approach validated in implementation. Prompt hardened against injection (F2, F3).
+- **Status:** done
 
 ### S-03: Task editing and deletion
 
@@ -131,73 +143,73 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Change ID:** task-edit-delete
 - **PRD refs:** FR-007, FR-008
 - **Prerequisites:** S-01
-- **Parallel with:** S-02
+- **Parallel with:** S-05, S-06 (Wave 1)
 - **Blockers:** —
 - **Unknowns:** —
-- **Risk:** Standard CRUD operations on an existing entity. Marked parallel with S-02 to maximise throughput given
-  capacity is the top blocker; an AI agent can work on this while another handles S-02.
-- **Status:** ready
+- **Risk:** Standard CRUD operations on an existing entity. 3-phase plan (backend → frontend → tests). Modifies
+  `TaskController.php` — creates a file conflict with S-04, so S-04 must merge after this.
+- **Plan:** `context/changes/task-edit-delete/plan.md`
+- **Status:** planned
 
 ### S-05: Branding & navigation cleanup
 
-- **Outcome:** the Laravel logo is replaced with a GardenLog-branded mark (text or simple icon) across all
-  views (navigation bar, welcome page, auth pages); the "Dashboard" navigation link is removed because
-  the app has a single authenticated view and the link adds no value
+- **Outcome:** the Laravel logo is replaced with a GardenLog leaf icon + "GardenLog" text mark across all views
+  (navigation bar, auth pages); all interactive elements use a green/earth-tone color palette instead of indigo
 - **Change ID:** branding-nav
 - **PRD refs:** UX polish (no new FR)
 - **Prerequisites:** F-01
-- **Parallel with:** S-04, S-06
+- **Parallel with:** S-03, S-06 (Wave 1)
 - **Blockers:** —
 - **Unknowns:** —
-- **Risk:** Cosmetic-only change; touches shared Blade layout (`resources/views/layouts/`) and Breeze
-  auth views. Low risk — no logic, no routes, no data changes. Can run in parallel with S-04 and S-06
-  because they touch different files/regions.
-- **Status:** ready
+- **Risk:** Cosmetic-only change; touches 7 Blade component files + `.env`. No logic, no routes, no data changes.
+  Zero file overlap with S-03 or S-06. S-06 consumes `<x-application-logo>` which this slice replaces (soft dep —
+  both work regardless of merge order, but visually best if S-05 merges first or same time as S-06).
+- **Plan:** `context/changes/branding-nav/plan.md`
+- **Status:** planned
 
 ### S-06: Welcome page redesign
 
 - **Outcome:** the default Laravel welcome page is replaced with a light-themed GardenLog landing page;
-  the page has a white background, a single centred card containing a GardenLog graphic and a welcome
-  headline, and Register / Log in buttons embedded in the card (the top-navigation auth links are
-  removed); the left-side Laravel marketing copy is gone
+  the page has a white background, a single centred card containing the logo, a welcome headline, and
+  Register / Log in buttons; all Laravel marketing copy is removed
 - **Change ID:** welcome-page
 - **PRD refs:** UX polish (no new FR)
 - **Prerequisites:** F-01
-- **Parallel with:** S-04, S-05
+- **Parallel with:** S-03, S-05 (Wave 1)
 - **Blockers:** —
 - **Unknowns:** —
-- **Risk:** Replaces `resources/views/welcome.blade.php` entirely; no backend changes. Parallel with
-  S-04 and S-05 — they touch different files (welcome vs. shared layout vs. ai-search partial), so no
-  merge conflict risk.
-- **Status:** ready
+- **Risk:** Replaces `resources/views/welcome.blade.php` entirely; no backend changes. Only touches one file —
+  zero conflict with any other slice. Consumes `<x-application-logo>` which S-05 replaces (soft dep — works
+  with either old or new logo).
+- **Plan:** `context/changes/welcome-page/plan.md`
+- **Status:** planned
 
 ### S-04: AI search UX polish
 
-- **Outcome:** when the AI search input is empty or too short, the user sees an inline hint explaining why the Ask
-  button is disabled (e.g., "Type at least 5 characters to ask"), so the disabled state never feels like a broken UI.
-  Covers any other small UI affordances around the ai-search partial discovered during S-02 manual testing.
+- **Outcome:** helper text hint for disabled Ask button, question echo above AI answer, contextual hint when no tasks
+  exist. Small UX affordances discovered during S-02 manual testing.
 - **Change ID:** ai-search-ux
 - **PRD refs:** UX polish (no new FR; refines FR-009 surface)
-- **Prerequisites:** S-02
-- **Parallel with:** S-03, S-05, S-06
-- **Blockers:** —
+- **Prerequisites:** S-02 (done), S-03† (file conflict)
+- **Parallel with:** — (Wave 2, runs alone after S-03 merges)
+- **Blockers:** S-03 must merge first — both modify `TaskController.php` (S-03 adds `update`/`destroy`, S-04 adds
+  `$hasNoTasks` to `index`). Different methods but same file = guaranteed merge conflict if branched from same base.
 - **Unknowns:** —
-- **Risk:** Pure frontend polish on `resources/views/tasks/partials/ai-search.blade.php`; no backend changes. Discovered
-  during S-02 manual verification — disabled-button state offered no feedback. Sequenced after S-02 so the underlying
-  flow is stable before iterating on affordances.
-- **Status:** ready
+- **Risk:** Small change (1 Blade partial + 1 controller line + tests). Quick to implement once S-03 lands.
+- **Plan:** `context/changes/ai-search-ux/plan.md`
+- **Status:** planned
 
 ## Backlog Handoff
 
-| Roadmap ID | Change ID        | Suggested issue title                                     | Ready for `/10x-plan` | Notes                               |
-|------------|------------------|-----------------------------------------------------------|-----------------------|-------------------------------------|
-| F-01       | auth-scaffold    | Auth scaffold: register, login, logout via Laravel Breeze | done                  | Merged — no planning needed         |
-| S-01       | task-log-core    | Task log: add task + chronological list view              | done                  | Implemented — PR #16                |
-| S-02       | ai-recall-loop   | AI recall: natural-language query → grounded answer       | yes                   | Run `/10x-plan ai-recall-loop`      |
-| S-03       | task-edit-delete | Task CRUD: edit and delete saved tasks                    | yes                   | Run `/10x-plan task-edit-delete`; parallel with S-02 |
-| S-04       | ai-search-ux     | AI search UX: inline hint for disabled Ask button         | yes                   | Run `/10x-plan ai-search-ux` after S-02 lands |
-| S-05       | branding-nav     | Branding: replace Laravel logo, remove Dashboard nav link | yes                   | Run `/10x-plan branding-nav`; parallel with S-06 |
-| S-06       | welcome-page     | Welcome page: light theme, branded card, auth in card     | yes                   | Run `/10x-plan welcome-page`; parallel with S-05 |
+| Roadmap ID | Change ID        | Suggested issue title                                     | Ready for `/10x-implement` | Notes                                        |
+|------------|------------------|-----------------------------------------------------------|----------------------------|----------------------------------------------|
+| F-01       | auth-scaffold    | Auth scaffold: register, login, logout via Laravel Breeze | done                       | Merged — no planning needed                  |
+| S-01       | task-log-core    | Task log: add task + chronological list view              | done                       | Implemented — PR #16                         |
+| S-02       | ai-recall-loop   | AI recall: natural-language query → grounded answer       | done                       | Implemented — PR #18                         |
+| S-03       | task-edit-delete | Task CRUD: edit and delete saved tasks                    | plan ready                 | Wave 1 — parallel with S-05, S-06            |
+| S-05       | branding-nav     | Branding: leaf logo + green theme across all UI           | plan ready                 | Wave 1 — parallel with S-03, S-06            |
+| S-06       | welcome-page     | Welcome page: light theme, branded card, auth in card     | plan ready                 | Wave 1 — parallel with S-03, S-05            |
+| S-04       | ai-search-ux     | AI search UX: hints, question echo, empty-tasks message   | plan ready                 | Wave 2 — after S-03 merges (file conflict)   |
 
 ## Open Roadmap Questions
 
@@ -218,3 +230,5 @@ None. PRD carried no unresolved open questions at time of generation.
 
 - **F-01: Auth scaffold** — Archived — `context/changes/auth-scaffold/`. Lesson: —.
 - **S-01: Task log core** — Implemented — `context/changes/task-log-core/`. PR #16. Lesson: —.
+- **S-02: AI recall loop** — Implemented — `context/changes/ai-recall-loop/`. PR #18. Lesson: prompt hardened against
+  injection (F2, F3); Prism::fake used for testing.
