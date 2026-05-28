@@ -153,9 +153,9 @@ No unit tests needed — this is a pure template change with no backend logic.
 
 #### Manual
 
-- [ ] 1.4 Guest sees centered card with logo, headline, subtext, Register and Log in buttons
-- [ ] 1.5 Register and Log in buttons navigate correctly
-- [ ] 1.6 Authenticated user sees Dashboard link instead of auth buttons
-- [ ] 1.7 Dashboard link navigates to `/dashboard`
-- [ ] 1.8 White background, no dark mode artifacts, no Laravel marketing copy
-- [ ] 1.9 Page looks reasonable on narrow viewports
+- [ ] 1.4 Guest sees centered card with logo, headline, subtext, Register and Log in buttons — awaiting manual verification
+- [ ] 1.5 Register and Log in buttons navigate correctly — awaiting manual verification
+- [ ] 1.6 Authenticated user sees Dashboard link instead of auth buttons — awaiting manual verification
+- [ ] 1.7 Dashboard link navigates to `/dashboard` — awaiting manual verification
+- [ ] 1.8 White background, no dark mode artifacts, no Laravel marketing copy — awaiting manual verification
+- [ ] 1.9 Page looks reasonable on narrow viewports — awaiting manual verification
