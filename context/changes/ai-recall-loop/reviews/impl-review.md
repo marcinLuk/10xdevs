@@ -50,7 +50,7 @@
   harden.
 - **Fix**: Wrap user-controlled text in delimiters (e.g. `<user_question>…</user_question>`,
   `<task_entry>…</task_entry>`) and instruct the model to treat delimited content as data.
-- **Decision**: PENDING
+- **Decision**: FIXED
 
 ### F3 — Blade `{{ }}` HTML-encodes descriptions in a non-HTML prompt
 
@@ -61,7 +61,7 @@
 - **Detail**: The prompt is plain text sent to the LLM, not HTML. Blade's `e()` turns `&` into `&amp;`, etc., degrading
   grounding fidelity.
 - **Fix**: Use `{!! $task->description !!}` (and `{!! $task->type !!}`) paired with the F2 delimiter wrapping.
-- **Decision**: PENDING
+- **Decision**: FIXED
 
 ### F4 — DatabaseSeeder hardcodes weak password without env guard
 

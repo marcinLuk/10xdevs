@@ -155,6 +155,6 @@ test('question input is trimmed and stripped of html tags', function () {
 
     $fake->assertRequest(function (array $recorded) {
         $request = $recorded[0];
-        expect($request->prompt())->toBe('when did I water?');
+        expect($request->prompt())->toBe('<user_question>when did I water?</user_question>');
     });
 });

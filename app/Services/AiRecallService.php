@@ -26,7 +26,7 @@ class AiRecallService
             $response = Prism::text()
                 ->using(Provider::OpenRouter, $model)
                 ->withSystemPrompt($systemPrompt)
-                ->withPrompt($question)
+                ->withPrompt('<user_question>'.$question.'</user_question>')
                 ->withClientOptions(['timeout' => 10])
                 ->withClientRetry(2, 100)
                 ->asText();
