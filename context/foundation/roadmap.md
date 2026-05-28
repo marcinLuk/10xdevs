@@ -1,9 +1,9 @@
 ---
 project: GardenLog
-version: 3
+version: 4
 status: draft
 created: 2026-05-25
-updated: 2026-05-26
+updated: 2026-05-28
 prd_version: 1
 main_goal: speed
 top_blocker: capacity
@@ -39,6 +39,7 @@ their own history. Success means the AI recall loop works reliably — no invent
 | S-01 | task-log-core    | add a task and view it in the chronological list                             | F-01          | FR-004, FR-005, FR-006 | done     |
 | S-02 | ai-recall-loop   | ask the AI about their task history and get a grounded, date-specific answer | S-01          | FR-009, FR-010, US-01  | ready    |
 | S-03 | task-edit-delete | edit or delete a saved task                                                  | S-01          | FR-007, FR-008         | ready    |
+| S-04 | ai-search-ux     | get inline validation feedback for searchbar                                 | S-02          | UX polish              | ready    |
 
 ## Streams
 
@@ -133,6 +134,22 @@ Foundations below assume these are present and do NOT re-scaffold them.
   capacity is the top blocker; an AI agent can work on this while another handles S-02.
 - **Status:** ready
 
+### S-04: AI search UX polish
+
+- **Outcome:** when the AI search input is empty or too short, the user sees an inline hint explaining why the Ask
+  button is disabled (e.g., "Type at least 5 characters to ask"), so the disabled state never feels like a broken UI.
+  Covers any other small UI affordances around the ai-search partial discovered during S-02 manual testing.
+- **Change ID:** ai-search-ux
+- **PRD refs:** UX polish (no new FR; refines FR-009 surface)
+- **Prerequisites:** S-02
+- **Parallel with:** S-03
+- **Blockers:** —
+- **Unknowns:** —
+- **Risk:** Pure frontend polish on `resources/views/tasks/partials/ai-search.blade.php`; no backend changes. Discovered
+  during S-02 manual verification — disabled-button state offered no feedback. Sequenced after S-02 so the underlying
+  flow is stable before iterating on affordances.
+- **Status:** ready
+
 ## Backlog Handoff
 
 | Roadmap ID | Change ID        | Suggested issue title                                     | Ready for `/10x-plan` | Notes                               |
@@ -141,6 +158,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 | S-01       | task-log-core    | Task log: add task + chronological list view              | done                  | Implemented — PR #16                |
 | S-02       | ai-recall-loop   | AI recall: natural-language query → grounded answer       | yes                   | Run `/10x-plan ai-recall-loop`      |
 | S-03       | task-edit-delete | Task CRUD: edit and delete saved tasks                    | yes                   | Run `/10x-plan task-edit-delete`; parallel with S-02 |
+| S-04       | ai-search-ux     | AI search UX: inline hint for disabled Ask button         | yes                   | Run `/10x-plan ai-search-ux` after S-02 lands |
 
 ## Open Roadmap Questions
 

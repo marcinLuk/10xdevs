@@ -411,34 +411,34 @@ No database migrations needed — this feature adds no new tables or columns. Th
 
 #### Automated
 
-- [x] 2.1 route:list shows POST tasks/ask with auth middleware
-- [x] 2.2 Pint passes
-- [x] 2.3 composer test passes (no regressions)
+- [x] 2.1 route:list shows POST tasks/ask with auth middleware — 3691a6b
+- [x] 2.2 Pint passes — 3691a6b
+- [x] 2.3 composer test passes (no regressions) — 3691a6b
 
 #### Manual
 
-- [x] 2.4 POST /tasks/ask with valid auth returns JSON response
-- [x] 2.5 Unauthenticated request redirects to login
-- [x] 2.6 Invalid input returns 422 with validation errors
+- [x] 2.4 POST /tasks/ask with valid auth returns JSON response — 3691a6b
+- [x] 2.5 Unauthenticated request redirects to login — 3691a6b
+- [x] 2.6 Invalid input returns 422 with validation errors — 3691a6b
 
 ### Phase 3: Frontend UI
 
 #### Automated
 
-- [ ] 3.1 npm run build succeeds
-- [ ] 3.2 Pint passes
-- [ ] 3.3 composer test passes (no regressions)
+- [x] 3.1 npm run build succeeds
+- [x] 3.2 Pint passes
+- [x] 3.3 composer test passes (no regressions)
 
 #### Manual
 
-- [ ] 3.4 Search bar visible on dashboard above task list
-- [ ] 3.5 Loading spinner shows during AI query
-- [ ] 3.6 Successful response displays inline
-- [ ] 3.7 Error shows message with retry button
-- [ ] 3.8 Visual consistency with dashboard design
-- [ ] 3.9 CSRF token included in requests
-- [ ] 3.10 Retry button re-submits the same question
-- [ ] 3.11 Empty query submission prevented
+- [x] 3.4 Search bar visible on dashboard above task list
+- [x] 3.5 Loading spinner shows during AI query
+- [x] 3.6 Successful response displays inline
+- [x] 3.7 Error shows message with retry button
+- [x] 3.8 Visual consistency with dashboard design
+- [x] 3.9 CSRF token included in requests
+- [x] 3.10 Retry button re-submits the same question
+- [x] 3.11 Empty query submission prevented
 
 ### Phase 4: Testing & Hardening
 
