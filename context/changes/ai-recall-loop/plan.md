@@ -396,30 +396,30 @@ No database migrations needed — this feature adds no new tables or columns. Th
 
 #### Automated
 
-- [x] 1.1 composer install succeeds with Prism PHP
-- [x] 1.2 config/prism.php exists after publish
-- [x] 1.3 AiRecallService resolves from container
-- [x] 1.4 Pint passes on new files
-- [x] 1.5 composer test passes (no regressions)
+- [x] 1.1 composer install succeeds with Prism PHP — eef4bd2
+- [x] 1.2 config/prism.php exists after publish — eef4bd2
+- [x] 1.3 AiRecallService resolves from container — eef4bd2
+- [x] 1.4 Pint passes on new files — eef4bd2
+- [x] 1.5 composer test passes (no regressions) — eef4bd2
 
 #### Manual
 
-- [x] 1.6 .env.example contains new env vars with defaults
-- [x] 1.7 Blade prompt template renders correctly with sample data
+- [x] 1.6 .env.example contains new env vars with defaults — eef4bd2
+- [x] 1.7 Blade prompt template renders correctly with sample data — eef4bd2
 
 ### Phase 2: Route, Controller & Validation
 
 #### Automated
 
-- [ ] 2.1 route:list shows POST tasks/ask with auth middleware
-- [ ] 2.2 Pint passes
-- [ ] 2.3 composer test passes (no regressions)
+- [x] 2.1 route:list shows POST tasks/ask with auth middleware
+- [x] 2.2 Pint passes
+- [x] 2.3 composer test passes (no regressions)
 
 #### Manual
 
-- [ ] 2.4 POST /tasks/ask with valid auth returns JSON response
-- [ ] 2.5 Unauthenticated request redirects to login
-- [ ] 2.6 Invalid input returns 422 with validation errors
+- [x] 2.4 POST /tasks/ask with valid auth returns JSON response
+- [x] 2.5 Unauthenticated request redirects to login
+- [x] 2.6 Invalid input returns 422 with validation errors
 
 ### Phase 3: Frontend UI
 

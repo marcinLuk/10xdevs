@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AiRecallController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaskController;
@@ -12,6 +13,7 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [TaskController::class, 'index'])->name('dashboard');
     Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');
+    Route::post('/tasks/ask', [AiRecallController::class, 'ask'])->name('tasks.ask');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
