@@ -40,6 +40,10 @@ their own history. Success means the AI recall loop works reliably — no invent
 | S-02 | ai-recall-loop   | ask the AI about their task history and get a grounded, date-specific answer | S-01          | FR-009, FR-010, US-01  | ready    |
 | S-03 | task-edit-delete | edit or delete a saved task                                                  | S-01          | FR-007, FR-008         | ready    |
 | S-04 | ai-search-ux     | get inline validation feedback for searchbar                                 | S-02          | UX polish              | ready    |
+| S-05 | branding-nav     | see a GardenLog logo instead of the Laravel logo; nav has no redundant link  | F-01          | UX polish              | ready    |
+| S-06 | welcome-page     | land on a clean, light welcome page with a branded card and auth actions     | F-01          | UX polish              | ready    |
+
+> S-04, S-05, S-06 are fully independent of each other and can run in parallel across three worktrees.
 
 ## Streams
 
@@ -134,6 +138,39 @@ Foundations below assume these are present and do NOT re-scaffold them.
   capacity is the top blocker; an AI agent can work on this while another handles S-02.
 - **Status:** ready
 
+### S-05: Branding & navigation cleanup
+
+- **Outcome:** the Laravel logo is replaced with a GardenLog-branded mark (text or simple icon) across all
+  views (navigation bar, welcome page, auth pages); the "Dashboard" navigation link is removed because
+  the app has a single authenticated view and the link adds no value
+- **Change ID:** branding-nav
+- **PRD refs:** UX polish (no new FR)
+- **Prerequisites:** F-01
+- **Parallel with:** S-04, S-06
+- **Blockers:** —
+- **Unknowns:** —
+- **Risk:** Cosmetic-only change; touches shared Blade layout (`resources/views/layouts/`) and Breeze
+  auth views. Low risk — no logic, no routes, no data changes. Can run in parallel with S-04 and S-06
+  because they touch different files/regions.
+- **Status:** ready
+
+### S-06: Welcome page redesign
+
+- **Outcome:** the default Laravel welcome page is replaced with a light-themed GardenLog landing page;
+  the page has a white background, a single centred card containing a GardenLog graphic and a welcome
+  headline, and Register / Log in buttons embedded in the card (the top-navigation auth links are
+  removed); the left-side Laravel marketing copy is gone
+- **Change ID:** welcome-page
+- **PRD refs:** UX polish (no new FR)
+- **Prerequisites:** F-01
+- **Parallel with:** S-04, S-05
+- **Blockers:** —
+- **Unknowns:** —
+- **Risk:** Replaces `resources/views/welcome.blade.php` entirely; no backend changes. Parallel with
+  S-04 and S-05 — they touch different files (welcome vs. shared layout vs. ai-search partial), so no
+  merge conflict risk.
+- **Status:** ready
+
 ### S-04: AI search UX polish
 
 - **Outcome:** when the AI search input is empty or too short, the user sees an inline hint explaining why the Ask
@@ -142,7 +179,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Change ID:** ai-search-ux
 - **PRD refs:** UX polish (no new FR; refines FR-009 surface)
 - **Prerequisites:** S-02
-- **Parallel with:** S-03
+- **Parallel with:** S-03, S-05, S-06
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Pure frontend polish on `resources/views/tasks/partials/ai-search.blade.php`; no backend changes. Discovered
@@ -159,6 +196,8 @@ Foundations below assume these are present and do NOT re-scaffold them.
 | S-02       | ai-recall-loop   | AI recall: natural-language query → grounded answer       | yes                   | Run `/10x-plan ai-recall-loop`      |
 | S-03       | task-edit-delete | Task CRUD: edit and delete saved tasks                    | yes                   | Run `/10x-plan task-edit-delete`; parallel with S-02 |
 | S-04       | ai-search-ux     | AI search UX: inline hint for disabled Ask button         | yes                   | Run `/10x-plan ai-search-ux` after S-02 lands |
+| S-05       | branding-nav     | Branding: replace Laravel logo, remove Dashboard nav link | yes                   | Run `/10x-plan branding-nav`; parallel with S-06 |
+| S-06       | welcome-page     | Welcome page: light theme, branded card, auth in card     | yes                   | Run `/10x-plan welcome-page`; parallel with S-05 |
 
 ## Open Roadmap Questions
 
