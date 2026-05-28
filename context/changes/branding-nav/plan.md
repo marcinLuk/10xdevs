@@ -197,15 +197,15 @@ None — this is a CSS class swap and SVG replacement. No new assets, no new HTT
 
 #### Automated
 
-- [ ] 1.1 All tests pass
-- [ ] 1.2 Code style passes (Pint)
-- [ ] 1.3 No remaining indigo references in Blade components
-- [ ] 1.4 No default Laravel SVG in application-logo
+- [x] 1.1 All tests pass — a0a8bd3
+- [x] 1.2 Code style passes (Pint) — a0a8bd3
+- [x] 1.3 No remaining indigo references in Blade components — a0a8bd3
+- [x] 1.4 No default Laravel SVG in application-logo — a0a8bd3
 
 #### Manual
 
-- [ ] 1.5 Login/register pages show GardenLog branding
-- [ ] 1.6 Nav bar shows leaf icon + "GardenLog" text
-- [ ] 1.7 All interactive elements use green theme
-- [ ] 1.8 Browser tab title shows "GardenLog"
-- [ ] 1.9 Mobile nav shows green active state
+- [x] 1.5 Login/register pages show GardenLog branding — a0a8bd3
+- [x] 1.6 Nav bar shows leaf icon + "GardenLog" text — a0a8bd3
+- [x] 1.7 All interactive elements use green theme — a0a8bd3
+- [x] 1.8 Browser tab title shows "GardenLog" — a0a8bd3
+- [x] 1.9 Mobile nav shows green active state — a0a8bd3
