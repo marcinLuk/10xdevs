@@ -147,9 +147,9 @@ No unit tests needed — this is a pure template change with no backend logic.
 
 #### Automated
 
-- [ ] 1.1 `npm run build` completes without errors
-- [ ] 1.2 `php artisan route:list` still shows `/` route
-- [ ] 1.3 `./vendor/bin/pint` passes with no style violations
+- [x] 1.1 `npm run build` completes without errors — 70c1093
+- [x] 1.2 `php artisan route:list` still shows `/` route — 70c1093
+- [x] 1.3 `./vendor/bin/pint` passes with no style violations — 70c1093
 
 #### Manual
 
