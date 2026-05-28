@@ -425,33 +425,33 @@ No database migrations needed — this feature adds no new tables or columns. Th
 
 #### Automated
 
-- [x] 3.1 npm run build succeeds
-- [x] 3.2 Pint passes
-- [x] 3.3 composer test passes (no regressions)
+- [x] 3.1 npm run build succeeds — b4f9d4d
+- [x] 3.2 Pint passes — b4f9d4d
+- [x] 3.3 composer test passes (no regressions) — b4f9d4d
 
 #### Manual
 
-- [x] 3.4 Search bar visible on dashboard above task list
-- [x] 3.5 Loading spinner shows during AI query
-- [x] 3.6 Successful response displays inline
-- [x] 3.7 Error shows message with retry button
-- [x] 3.8 Visual consistency with dashboard design
-- [x] 3.9 CSRF token included in requests
-- [x] 3.10 Retry button re-submits the same question
-- [x] 3.11 Empty query submission prevented
+- [x] 3.4 Search bar visible on dashboard above task list — b4f9d4d
+- [x] 3.5 Loading spinner shows during AI query — b4f9d4d
+- [x] 3.6 Successful response displays inline — b4f9d4d
+- [x] 3.7 Error shows message with retry button — b4f9d4d
+- [x] 3.8 Visual consistency with dashboard design — b4f9d4d
+- [x] 3.9 CSRF token included in requests — b4f9d4d
+- [x] 3.10 Retry button re-submits the same question — b4f9d4d
+- [x] 3.11 Empty query submission prevented — b4f9d4d
 
 ### Phase 4: Testing & Hardening
 
 #### Automated
 
-- [ ] 4.1 All new tests pass (composer test)
-- [ ] 4.2 Pint passes
-- [ ] 4.3 No regressions in existing tests
-- [ ] 4.4 Coverage includes: auth, happy path, empty history, validation, API error, data isolation
+- [x] 4.1 All new tests pass (composer test)
+- [x] 4.2 Pint passes
+- [x] 4.3 No regressions in existing tests
+- [x] 4.4 Coverage includes: auth, happy path, empty history, validation, API error, data isolation
 
 #### Manual
 
-- [ ] 4.5 End-to-end: ask question, get correct grounded answer
-- [ ] 4.6 Non-existent task: AI says "I don't see that"
-- [ ] 4.7 AI never invents dates or events
-- [ ] 4.8 Response within 5 seconds
+- [x] 4.5 End-to-end: ask question, get correct grounded answer
+- [x] 4.6 Non-existent task: AI says "I don't see that"
+- [x] 4.7 AI never invents dates or events
+- [x] 4.8 Response within 5 seconds
