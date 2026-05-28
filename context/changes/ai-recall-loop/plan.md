@@ -444,14 +444,14 @@ No database migrations needed — this feature adds no new tables or columns. Th
 
 #### Automated
 
-- [x] 4.1 All new tests pass (composer test)
-- [x] 4.2 Pint passes
-- [x] 4.3 No regressions in existing tests
-- [x] 4.4 Coverage includes: auth, happy path, empty history, validation, API error, data isolation
+- [x] 4.1 All new tests pass (composer test) — 2aba359
+- [x] 4.2 Pint passes — 2aba359
+- [x] 4.3 No regressions in existing tests — 2aba359
+- [x] 4.4 Coverage includes: auth, happy path, empty history, validation, API error, data isolation — 2aba359
 
 #### Manual
 
-- [x] 4.5 End-to-end: ask question, get correct grounded answer
-- [x] 4.6 Non-existent task: AI says "I don't see that"
-- [x] 4.7 AI never invents dates or events
-- [x] 4.8 Response within 5 seconds
+- [x] 4.5 End-to-end: ask question, get correct grounded answer — 2aba359
+- [x] 4.6 Non-existent task: AI says "I don't see that" — 2aba359
+- [x] 4.7 AI never invents dates or events — 2aba359
+- [x] 4.8 Response within 5 seconds — 2aba359
