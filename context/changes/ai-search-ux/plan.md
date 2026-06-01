@@ -217,4 +217,4 @@ additional query.
 
 #### Manual
 
-- [ ] 2.3 Review test output — new test names are descriptive
+- [x] 2.3 Review test output — new test names are descriptive
