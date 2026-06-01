@@ -1,9 +1,9 @@
 ---
 project: GardenLog
-version: 5
+version: 6
 status: draft
 created: 2026-05-25
-updated: 2026-05-28
+updated: 2026-06-01
 prd_version: 1
 main_goal: speed
 top_blocker: capacity
@@ -38,28 +38,12 @@ their own history. Success means the AI recall loop works reliably — no invent
 | F-01 | auth-scaffold    | (foundation) register, log in, and log out                                   | —             | FR-001, FR-002, FR-003 | done     | —    |
 | S-01 | task-log-core    | add a task and view it in the chronological list                             | F-01          | FR-004, FR-005, FR-006 | done     | —    |
 | S-02 | ai-recall-loop   | ask the AI about their task history and get a grounded, date-specific answer | S-01          | FR-009, FR-010, US-01  | done     | —    |
-| S-03 | task-edit-delete | edit or delete a saved task                                                  | S-01          | FR-007, FR-008         | planned  | 1    |
-| S-05 | branding-nav     | see a GardenLog logo instead of the Laravel logo; green theme across all UI  | F-01          | UX polish              | planned  | 1    |
-| S-06 | welcome-page     | land on a clean, light welcome page with a branded card and auth actions     | F-01          | UX polish              | planned  | 1    |
-| S-04 | ai-search-ux     | get inline validation feedback and UX polish for AI searchbar                | S-02, S-03†   | UX polish              | planned  | 2    |
+| S-03 | task-edit-delete | edit or delete a saved task                                                  | S-01          | FR-007, FR-008         | done     | —    |
+| S-05 | branding-nav     | see a GardenLog logo instead of the Laravel logo; green theme across all UI  | F-01          | UX polish              | done     | —    |
+| S-06 | welcome-page     | land on a clean, light welcome page with a branded card and auth actions     | F-01          | UX polish              | done     | —    |
+| S-04 | ai-search-ux     | get inline validation feedback and UX polish for AI searchbar                | S-02, S-03    | UX polish              | ready    | —    |
 
-> **† File conflict:** S-04 and S-03 both modify `TaskController.php` (different methods, same file). S-04 must merge
-> after S-03 to avoid a manual merge conflict.
-
-### Parallel execution plan
-
-```
-Wave 1 — 3 worktrees równolegle:
-  ├─ worktree A: S-03 task-edit-delete  ──► PR
-  ├─ worktree B: S-05 branding-nav      ──► PR
-  └─ worktree C: S-06 welcome-page      ──► PR
-
-Wave 2 — po merge S-03:
-  └─ worktree D: S-04 ai-search-ux      ──► PR
-```
-
-Zero file conflicts within Wave 1 — all three touch completely disjoint file sets. S-04 is small (1 phase + tests)
-and lands quickly once S-03 is merged.
+> Wave 1 (S-03, S-05, S-06) completed — all three merged. S-04 is the sole remaining item.
 
 ## Streams
 
@@ -149,7 +133,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Risk:** Standard CRUD operations on an existing entity. 3-phase plan (backend → frontend → tests). Modifies
   `TaskController.php` — creates a file conflict with S-04, so S-04 must merge after this.
 - **Plan:** `context/changes/task-edit-delete/plan.md`
-- **Status:** planned
+- **Status:** done
 
 ### S-05: Branding & navigation cleanup
 
@@ -165,7 +149,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
   Zero file overlap with S-03 or S-06. S-06 consumes `<x-application-logo>` which this slice replaces (soft dep —
   both work regardless of merge order, but visually best if S-05 merges first or same time as S-06).
 - **Plan:** `context/changes/branding-nav/plan.md`
-- **Status:** planned
+- **Status:** done
 
 ### S-06: Welcome page redesign
 
@@ -182,7 +166,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
   zero conflict with any other slice. Consumes `<x-application-logo>` which S-05 replaces (soft dep — works
   with either old or new logo).
 - **Plan:** `context/changes/welcome-page/plan.md`
-- **Status:** planned
+- **Status:** done
 
 ### S-04: AI search UX polish
 
@@ -190,26 +174,25 @@ Foundations below assume these are present and do NOT re-scaffold them.
   exist. Small UX affordances discovered during S-02 manual testing.
 - **Change ID:** ai-search-ux
 - **PRD refs:** UX polish (no new FR; refines FR-009 surface)
-- **Prerequisites:** S-02 (done), S-03† (file conflict)
-- **Parallel with:** — (Wave 2, runs alone after S-03 merges)
-- **Blockers:** S-03 must merge first — both modify `TaskController.php` (S-03 adds `update`/`destroy`, S-04 adds
-  `$hasNoTasks` to `index`). Different methods but same file = guaranteed merge conflict if branched from same base.
+- **Prerequisites:** S-02 (done), S-03 (done)
+- **Parallel with:** —
+- **Blockers:** —
 - **Unknowns:** —
-- **Risk:** Small change (1 Blade partial + 1 controller line + tests). Quick to implement once S-03 lands.
+- **Risk:** Small change (1 Blade partial + 1 controller line + tests). All prerequisites merged; ready to implement.
 - **Plan:** `context/changes/ai-search-ux/plan.md`
-- **Status:** planned
+- **Status:** ready
 
 ## Backlog Handoff
 
 | Roadmap ID | Change ID        | Suggested issue title                                     | Ready for `/10x-implement` | Notes                                        |
 |------------|------------------|-----------------------------------------------------------|----------------------------|----------------------------------------------|
-| F-01       | auth-scaffold    | Auth scaffold: register, login, logout via Laravel Breeze | done                       | Merged — no planning needed                  |
+| F-01       | auth-scaffold    | Auth scaffold: register, login, logout via Laravel Breeze | done                       | Merged — PR #15                              |
 | S-01       | task-log-core    | Task log: add task + chronological list view              | done                       | Implemented — PR #16                         |
 | S-02       | ai-recall-loop   | AI recall: natural-language query → grounded answer       | done                       | Implemented — PR #18                         |
-| S-03       | task-edit-delete | Task CRUD: edit and delete saved tasks                    | plan ready                 | Wave 1 — parallel with S-05, S-06            |
-| S-05       | branding-nav     | Branding: leaf logo + green theme across all UI           | plan ready                 | Wave 1 — parallel with S-03, S-06            |
-| S-06       | welcome-page     | Welcome page: light theme, branded card, auth in card     | plan ready                 | Wave 1 — parallel with S-03, S-05            |
-| S-04       | ai-search-ux     | AI search UX: hints, question echo, empty-tasks message   | plan ready                 | Wave 2 — after S-03 merges (file conflict)   |
+| S-03       | task-edit-delete | Task CRUD: edit and delete saved tasks                    | done                       | Implemented — PR #20                         |
+| S-05       | branding-nav     | Branding: leaf logo + green theme across all UI           | done                       | Implemented — PR #21                         |
+| S-06       | welcome-page     | Welcome page: light theme, branded card, auth in card     | done                       | Implemented — PR #22                         |
+| S-04       | ai-search-ux     | AI search UX: hints, question echo, empty-tasks message   | yes                        | All prerequisites merged — ready to implement |
 
 ## Open Roadmap Questions
 
@@ -228,7 +211,10 @@ None. PRD carried no unresolved open questions at time of generation.
 
 ## Done
 
-- **F-01: Auth scaffold** — Archived — `context/changes/auth-scaffold/`. Lesson: —.
+- **F-01: Auth scaffold** — Archived — `context/changes/auth-scaffold/`. PR #15. Lesson: —.
 - **S-01: Task log core** — Implemented — `context/changes/task-log-core/`. PR #16. Lesson: —.
 - **S-02: AI recall loop** — Implemented — `context/changes/ai-recall-loop/`. PR #18. Lesson: prompt hardened against
   injection (F2, F3); Prism::fake used for testing.
+- **S-03: Task editing and deletion** — Implemented — `context/changes/task-edit-delete/`. PR #20. Lesson: —.
+- **S-05: Branding & navigation cleanup** — Implemented — `context/changes/branding-nav/`. PR #21. Lesson: —.
+- **S-06: Welcome page redesign** — Implemented — `context/changes/welcome-page/`. PR #22. Lesson: —.
