@@ -47,43 +47,50 @@
     >
         <h3 class="text-lg font-medium text-gray-900 mb-3">{{ __('Ask your garden log') }}</h3>
 
-        <form @submit.prevent="submit()" class="flex flex-col sm:flex-row gap-2">
-            <input
-                type="text"
-                x-model="query"
-                required
-                minlength="5"
-                maxlength="500"
-                :disabled="loading"
-                placeholder="{{ __('e.g. when did I last fertilize the tomatoes?') }}"
-                class="flex-1 rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 disabled:opacity-50"
-            >
-            <x-primary-button type="submit" ::disabled="loading || query.trim().length < 5">
-                <span x-show="!loading">{{ __('Ask') }}</span>
-                <span x-show="loading" class="flex items-center gap-2">
-                    <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-                    </svg>
-                    {{ __('Thinking...') }}
-                </span>
-            </x-primary-button>
-        </form>
+        @if($hasNoTasks ?? false)
+            <p class="text-sm text-gray-500">{{ __('Log some tasks first — the AI searches your task history.') }}</p>
+        @else
+            <form @submit.prevent="submit()" class="flex flex-col sm:flex-row gap-2">
+                <input
+                    type="text"
+                    x-model="query"
+                    required
+                    minlength="5"
+                    maxlength="500"
+                    :disabled="loading"
+                    placeholder="{{ __('e.g. when did I last fertilize the tomatoes?') }}"
+                    class="flex-1 rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 disabled:opacity-50"
+                >
+                <x-primary-button type="submit" ::disabled="loading || query.trim().length < 5">
+                    <span x-show="!loading">{{ __('Ask') }}</span>
+                    <span x-show="loading" class="flex items-center gap-2">
+                        <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                        </svg>
+                        {{ __('Thinking...') }}
+                    </span>
+                </x-primary-button>
+            </form>
 
-        <div x-show="answer" x-cloak class="mt-4 rounded-md bg-green-50 p-4">
-            <p class="text-sm text-green-900 whitespace-pre-wrap" x-text="answer"></p>
-        </div>
+            <p x-show="query.trim().length < 5 && !loading" x-cloak class="mt-1 text-xs text-gray-400">{{ __('Type at least 5 characters to ask') }}</p>
 
-        <div x-show="error" x-cloak class="mt-4 rounded-md bg-red-50 p-4 flex items-start justify-between gap-3">
-            <p class="text-sm text-red-800" x-text="error"></p>
-            <button
-                type="button"
-                @click="retry()"
-                :disabled="loading"
-                class="shrink-0 text-sm font-medium text-red-700 underline hover:text-red-900 disabled:opacity-50"
-            >
-                {{ __('Retry') }}
-            </button>
-        </div>
+            <div x-show="answer" x-cloak class="mt-4 rounded-md bg-green-50 p-4">
+                <p class="text-xs text-green-700 mb-1 font-medium" x-text="'You asked: ' + lastQuery"></p>
+                <p class="text-sm text-green-900 whitespace-pre-wrap" x-text="answer"></p>
+            </div>
+
+            <div x-show="error" x-cloak class="mt-4 rounded-md bg-red-50 p-4 flex items-start justify-between gap-3">
+                <p class="text-sm text-red-800" x-text="error"></p>
+                <button
+                    type="button"
+                    @click="retry()"
+                    :disabled="loading"
+                    class="shrink-0 text-sm font-medium text-red-700 underline hover:text-red-900 disabled:opacity-50"
+                >
+                    {{ __('Retry') }}
+                </button>
+            </div>
+        @endif
     </div>
 </div>
