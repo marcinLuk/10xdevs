@@ -42,9 +42,9 @@ their own history. Success means the AI recall loop works reliably — no invent
 | S-05 | branding-nav     | see a GardenLog logo instead of the Laravel logo; green theme across all UI  | F-01          | UX polish              | done     | —    |
 | S-06 | welcome-page     | land on a clean, light welcome page with a branded card and auth actions     | F-01          | UX polish              | done     | —    |
 | S-04 | ai-search-ux     | get inline validation feedback and UX polish for AI searchbar                | S-02, S-03    | UX polish              | done     | —    |
-| S-07 | ui-fixes-round-1 | see PNG logo everywhere, fixed welcome layout, and working submit buttons   | S-04          | UX polish              | ready    | —    |
+| S-07 | ui-fixes-round-1 | see PNG logo everywhere, fixed welcome layout, and working submit buttons   | S-04          | UX polish              | done     | —    |
 
-> All PRD slices completed. S-07 is the remaining UI bugfix/polish item.
+> All roadmap items completed.
 
 ## Streams
 
@@ -196,7 +196,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Unknowns:** —
 - **Risk:** Cosmetic + regression fixes only. Touches Blade components and views; no backend logic changes. Logo PNG
   already exists in repo. Bugs #3–#5 are regressions from recent UI changes — straightforward restore.
-- **Status:** ready
+- **Status:** done
 
 ## Backlog Handoff
 
@@ -209,7 +209,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 | S-05       | branding-nav     | Branding: leaf logo + green theme across all UI           | done                       | Implemented — PR #21                         |
 | S-06       | welcome-page     | Welcome page: light theme, branded card, auth in card     | done                       | Implemented — PR #22                         |
 | S-04       | ai-search-ux     | AI search UX: hints, question echo, empty-tasks message   | done                       | Implemented — PR #23                          |
-| S-07       | ui-fixes-round-1 | UI fixes: PNG logo, welcome layout, restore submit buttons| yes                        | All prerequisites merged — ready to implement |
+| S-07       | ui-fixes-round-1 | UI fixes: PNG logo, welcome layout, restore submit buttons| done                       | Implemented — PR #24                          |
 
 ## Open Roadmap Questions
 
@@ -236,3 +236,4 @@ None. PRD carried no unresolved open questions at time of generation.
 - **S-05: Branding & navigation cleanup** — Implemented — `context/changes/branding-nav/`. PR #21. Lesson: —.
 - **S-06: Welcome page redesign** — Implemented — `context/changes/welcome-page/`. PR #22. Lesson: —.
 - **S-04: AI search UX polish** — Implemented — `context/changes/ai-search-ux/`. PR #23. Lesson: —.
+- **S-07: UI fixes round 1** — Implemented — `context/changes/ui-fixes-round-1/`. PR #24. Lesson: —.
