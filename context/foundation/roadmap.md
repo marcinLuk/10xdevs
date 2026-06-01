@@ -1,6 +1,6 @@
 ---
 project: GardenLog
-version: 6
+version: 7
 status: draft
 created: 2026-05-25
 updated: 2026-06-01
@@ -41,9 +41,10 @@ their own history. Success means the AI recall loop works reliably — no invent
 | S-03 | task-edit-delete | edit or delete a saved task                                                  | S-01          | FR-007, FR-008         | done     | —    |
 | S-05 | branding-nav     | see a GardenLog logo instead of the Laravel logo; green theme across all UI  | F-01          | UX polish              | done     | —    |
 | S-06 | welcome-page     | land on a clean, light welcome page with a branded card and auth actions     | F-01          | UX polish              | done     | —    |
-| S-04 | ai-search-ux     | get inline validation feedback and UX polish for AI searchbar                | S-02, S-03    | UX polish              | ready    | —    |
+| S-04 | ai-search-ux     | get inline validation feedback and UX polish for AI searchbar                | S-02, S-03    | UX polish              | done     | —    |
+| S-07 | ui-fixes-round-1 | see PNG logo everywhere, fixed welcome layout, and working submit buttons   | S-04          | UX polish              | done     | —    |
 
-> Wave 1 (S-03, S-05, S-06) completed — all three merged. S-04 is the sole remaining item.
+> All roadmap items completed.
 
 ## Streams
 
@@ -180,7 +181,22 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Unknowns:** —
 - **Risk:** Small change (1 Blade partial + 1 controller line + tests). All prerequisites merged; ready to implement.
 - **Plan:** `context/changes/ai-search-ux/plan.md`
-- **Status:** ready
+- **Status:** done
+
+### S-07: UI fixes round 1
+
+- **Outcome:** user sees the PNG logo (not SVG) on welcome page, nav bar, and guest layout; welcome page has tighter
+  container width and proper padding; submit buttons are visible and functional on login, register, searchbar, and
+  task add/edit forms
+- **Change ID:** ui-fixes-round-1
+- **PRD refs:** UX polish (no new FR; fixes regressions from S-05/S-06 and restores missing buttons)
+- **Prerequisites:** S-04 (done)
+- **Parallel with:** —
+- **Blockers:** —
+- **Unknowns:** —
+- **Risk:** Cosmetic + regression fixes only. Touches Blade components and views; no backend logic changes. Logo PNG
+  already exists in repo. Bugs #3–#5 are regressions from recent UI changes — straightforward restore.
+- **Status:** done
 
 ## Backlog Handoff
 
@@ -192,7 +208,8 @@ Foundations below assume these are present and do NOT re-scaffold them.
 | S-03       | task-edit-delete | Task CRUD: edit and delete saved tasks                    | done                       | Implemented — PR #20                         |
 | S-05       | branding-nav     | Branding: leaf logo + green theme across all UI           | done                       | Implemented — PR #21                         |
 | S-06       | welcome-page     | Welcome page: light theme, branded card, auth in card     | done                       | Implemented — PR #22                         |
-| S-04       | ai-search-ux     | AI search UX: hints, question echo, empty-tasks message   | yes                        | All prerequisites merged — ready to implement |
+| S-04       | ai-search-ux     | AI search UX: hints, question echo, empty-tasks message   | done                       | Implemented — PR #23                          |
+| S-07       | ui-fixes-round-1 | UI fixes: PNG logo, welcome layout, restore submit buttons| done                       | Implemented — PR #24                          |
 
 ## Open Roadmap Questions
 
@@ -218,3 +235,5 @@ None. PRD carried no unresolved open questions at time of generation.
 - **S-03: Task editing and deletion** — Implemented — `context/changes/task-edit-delete/`. PR #20. Lesson: —.
 - **S-05: Branding & navigation cleanup** — Implemented — `context/changes/branding-nav/`. PR #21. Lesson: —.
 - **S-06: Welcome page redesign** — Implemented — `context/changes/welcome-page/`. PR #22. Lesson: —.
+- **S-04: AI search UX polish** — Implemented — `context/changes/ai-search-ux/`. PR #23. Lesson: —.
+- **S-07: UI fixes round 1** — Implemented — `context/changes/ui-fixes-round-1/`. PR #24. Lesson: —.

@@ -6,17 +6,12 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}" class="flex items-center gap-2">
-                        <x-application-logo class="block h-8 w-auto text-green-600" />
-                        <span class="font-semibold text-lg text-green-800">GardenLog</span>
+                        <x-application-logo class="block h-8 w-auto" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"></div>
             </div>
 
             <!-- Settings Dropdown -->
