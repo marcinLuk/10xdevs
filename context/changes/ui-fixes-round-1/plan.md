@@ -114,8 +114,8 @@ Replace SVG with PNG in the component, remove stale color classes from consumers
 
 #### Automated
 
-- [ ] 1.1 App compiles without errors (`npm run build`)
-- [ ] 1.2 No broken Blade syntax (`php artisan view:cache`)
+- [x] 1.1 App compiles without errors (`npm run build`)
+- [x] 1.2 No broken Blade syntax (`php artisan view:cache`)
 
 #### Manual
 
