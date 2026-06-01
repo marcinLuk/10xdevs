@@ -14,8 +14,9 @@ class TaskController extends Controller
     public function index(Request $request): View
     {
         $tasks = $request->user()->tasks()->latest('task_date')->paginate(15);
+        $hasNoTasks = $tasks->isEmpty();
 
-        return view('dashboard', compact('tasks'));
+        return view('dashboard', compact('tasks', 'hasNoTasks'));
     }
 
     public function store(StoreTaskRequest $request): RedirectResponse

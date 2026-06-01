@@ -1,9 +1,9 @@
 ---
 id: ai-search-ux
 title: AI search UX polish
-status: planned
+status: implementing
 created: 2026-05-28
-updated: 2026-05-28
+updated: 2026-06-01
 roadmap: S-04
 prd_refs: UX polish (refines FR-009)
 ---

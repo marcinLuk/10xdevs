@@ -198,23 +198,23 @@ additional query.
 
 #### Automated
 
-- [ ] 1.1 `docker exec gardenlog-app php artisan test` — all existing tests pass
-- [ ] 1.2 `docker exec gardenlog-app npx vite build` — frontend builds without errors
+- [x] 1.1 `docker exec gardenlog-app php artisan test` — all existing tests pass — 82dbf7e
+- [x] 1.2 `docker exec gardenlog-app npx vite build` — frontend builds without errors — 82dbf7e
 
 #### Manual
 
-- [ ] 1.3 Helper text visible with empty/short query, disappears at 5+ chars
-- [ ] 1.4 Question echo shows "You asked: [question]" above AI answer
-- [ ] 1.5 Empty-tasks hint appears instead of search form for users with no tasks
-- [ ] 1.6 Retry and error states still work correctly
+- [x] 1.3 Helper text visible with empty/short query, disappears at 5+ chars — 82dbf7e
+- [x] 1.4 Question echo shows "You asked: [question]" above AI answer — 82dbf7e
+- [x] 1.5 Empty-tasks hint appears instead of search form for users with no tasks — 82dbf7e
+- [x] 1.6 Retry and error states still work correctly — 82dbf7e
 
 ### Phase 2: Tests
 
 #### Automated
 
-- [ ] 2.1 `docker exec gardenlog-app php artisan test --filter=AiRecallTest` — all tests pass
-- [ ] 2.2 `docker exec gardenlog-app ./vendor/bin/pint --test` — code style passes
+- [x] 2.1 `docker exec gardenlog-app php artisan test --filter=AiRecallTest` — all tests pass
+- [x] 2.2 `docker exec gardenlog-app ./vendor/bin/pint --test` — code style passes
 
 #### Manual
 
-- [ ] 2.3 Review test output — new test names are descriptive
+- [x] 2.3 Review test output — new test names are descriptive
