@@ -1,3 +1,1 @@
-<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor" {{ $attributes }}>
-    <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20c4 0 8.5-3 9-10zm-6 4c0 .18 0 .36-.05.54a7.84 7.84 0 0 1-3.3 4.54A2.5 2.5 0 0 1 11 12zM22 2L7 8.5c-.72.31-1.4.64-2 1A14.5 14.5 0 0 1 17 8l5-6z"/>
-</svg>
+<img style="width:105px ; height: auto" src="{{ asset('images/logo.png') }}" alt="GardenLog" {{ $attributes }} />

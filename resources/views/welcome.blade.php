@@ -15,7 +15,7 @@
         <div class="w-full max-w-md mx-auto px-6 py-12">
             <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
                 <div class="flex justify-center mb-6">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                    <x-application-logo class="w-20 h-20" />
                 </div>
 
                 <h1 class="text-2xl font-bold text-gray-900 mb-2">Welcome to GardenLog</h1>

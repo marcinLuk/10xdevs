@@ -1,7 +1,7 @@
 ---
 change_id: ui-fixes-round-1
 title: "Swap SVG logo component to PNG image"
-status: planned
+status: implementing
 created: 2026-06-01
 updated: 2026-06-01
 ---
