@@ -158,3 +158,41 @@ test('question input is trimmed and stripped of html tags', function () {
         expect($request->prompt())->toBe('<user_question>when did I water?</user_question>');
     });
 });
+
+test('dashboard passes has_no_tasks flag when empty', function () {
+    $user = User::factory()->create();
+
+    $response = $this->actingAs($user)->get('/dashboard');
+
+    $response->assertOk();
+    expect($response->viewData('hasNoTasks'))->toBeTrue();
+});
+
+test('dashboard passes has_no_tasks flag when tasks exist', function () {
+    $user = User::factory()->create();
+    Task::factory()->for($user)->create();
+
+    $response = $this->actingAs($user)->get('/dashboard');
+
+    $response->assertOk();
+    expect($response->viewData('hasNoTasks'))->toBeFalse();
+});
+
+test('empty tasks hint is visible when no tasks', function () {
+    $user = User::factory()->create();
+
+    $this->actingAs($user)
+        ->get('/dashboard')
+        ->assertOk()
+        ->assertSee('Log some tasks first');
+});
+
+test('search form is visible when tasks exist', function () {
+    $user = User::factory()->create();
+    Task::factory()->for($user)->create();
+
+    $this->actingAs($user)
+        ->get('/dashboard')
+        ->assertOk()
+        ->assertSee('e.g. when did I last fertilize the tomatoes?');
+});
