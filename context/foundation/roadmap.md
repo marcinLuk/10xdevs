@@ -232,7 +232,7 @@ None. PRD carried no unresolved open questions at time of generation.
 - **S-01: Task log core** — Archived 2026-06-07 → `context/archive/2026-05-26-task-log-core/`. PR #16. Lesson: —.
 - **S-02: AI recall loop** — Archived 2026-06-07 → `context/archive/2026-05-27-ai-recall-loop/`. PR #18. Lesson: prompt
   hardened against injection (F2, F3); Prism::fake used for testing.
-- **S-03: Task editing and deletion** — Implemented — `context/changes/task-edit-delete/`. PR #20. Lesson: —.
+- **S-03: Task editing and deletion** — Archived 2026-06-07 → `context/archive/2026-05-28-task-edit-delete/`. PR #20. Lesson: —.
 - **S-05: Branding & navigation cleanup** — Implemented — `context/changes/branding-nav/`. PR #21. Lesson: —.
 - **S-06: Welcome page redesign** — Implemented — `context/changes/welcome-page/`. PR #22. Lesson: —.
 - **S-04: AI search UX polish** — Implemented — `context/changes/ai-search-ux/`. PR #23. Lesson: —.
