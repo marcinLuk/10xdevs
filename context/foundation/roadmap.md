@@ -229,7 +229,7 @@ None. PRD carried no unresolved open questions at time of generation.
 ## Done
 
 - **F-01: Auth scaffold** — Archived 2026-06-07 → `context/archive/2026-05-26-auth-scaffold/`. PR #15. Lesson: —.
-- **S-01: Task log core** — Implemented — `context/changes/task-log-core/`. PR #16. Lesson: —.
+- **S-01: Task log core** — Archived 2026-06-07 → `context/archive/2026-05-26-task-log-core/`. PR #16. Lesson: —.
 - **S-02: AI recall loop** — Archived 2026-06-07 → `context/archive/2026-05-27-ai-recall-loop/`. PR #18. Lesson: prompt
   hardened against injection (F2, F3); Prism::fake used for testing.
 - **S-03: Task editing and deletion** — Implemented — `context/changes/task-edit-delete/`. PR #20. Lesson: —.
