@@ -449,10 +449,10 @@ changes — the eval route is unregistered outside `local`/`testing`.
 
 #### Automated
 
-- [x] 4.1 `test-plan.md` §6.4 no longer reads "TBD" for AI search behaviour
-- [x] 4.2 Files exist: `tests/Evals/promptfoo/README.md` + `promptfooconfig.yaml`
+- [x] 4.1 `test-plan.md` §6.4 no longer reads "TBD" for AI search behaviour — 68cbde1
+- [x] 4.2 Files exist: `tests/Evals/promptfoo/README.md` + `promptfooconfig.yaml` — 68cbde1
 
 #### Manual
 
-- [x] 4.3 A contributor can follow the README from zero to a passing eval run
-- [x] 4.4 §4 Stack + §5 Gates reflect promptfoo and the deferred CI gate
+- [x] 4.3 A contributor can follow the README from zero to a passing eval run — 68cbde1
+- [x] 4.4 §4 Stack + §5 Gates reflect promptfoo and the deferred CI gate — 68cbde1
