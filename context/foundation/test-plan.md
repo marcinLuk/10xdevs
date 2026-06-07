@@ -75,6 +75,7 @@ orchestrator updates Status as artifacts appear on disk.
 |--------------------|-------------------------------------|---------------------|-------------------------------------------------------------------|
 | unit + integration | Pest (PHPUnit backend)              | see `composer.lock` | Configured in `phpunit.xml`; SQLite `:memory:` for tests          |
 | AI mocking         | Prism::fake                         | see `composer.lock` | Used in existing AI recall tests per roadmap S-02                 |
+| AI grounding eval  | promptfoo (HTTP provider + OpenRouter judge) | see `package.json` | `tests/Evals/promptfoo/`; ad-hoc via `npm run eval:grounding` (real API); needs Node 22 LTS + app served on `:8001`; see §6.4 |
 | e2e                | none yet — see Phase 3 if warranted | —                   | Not planned; integration tests cover critical paths at lower cost |
 | lint + style       | Laravel Pint                        | see `composer.lock` | Run via `./vendor/bin/pint`                                       |
 
@@ -92,8 +93,14 @@ orchestrator updates Status as artifacts appear on disk.
 |---------------------------|------------|---------------------------|--------------------------------------------------------------|
 | lint + style (Pint)       | local + CI | required                  | code style drift                                             |
 | unit + integration (Pest) | local + CI | required after §3 Phase 1 | logic regressions, ownership violations, validation failures |
-| AI grounding check        | CI on PR   | required after §3 Phase 1 | AI hallucination regression                                  |
+| AI grounding check        | local/ad-hoc (CI deferred) | stub — see note below | AI hallucination regression                                  |
 | pre-merge test suite      | CI on PR   | required after §3 Phase 3 | all regressions blocked before merge                         |
+
+> **AI grounding check is a stub here.** The promptfoo grounding eval shipped in
+> change `AI-tests` runs **local/ad-hoc** (`npm run eval:grounding`) and costs real
+> API tokens, so it is not wired into CI by this change. Authoring the automated
+> PR gate is deferred to the §3 Phase 3 "Quality gates wiring" rollout change — no
+> GitHub Actions workflow is created now (lesson boundary).
 
 ## 6. Cookbook Patterns
 
@@ -115,11 +122,43 @@ TBD — see §3 Phase 1 for task endpoint ownership/persistence pattern and Phas
 
 ### 6.4 Adding a test for AI search behavior
 
-TBD — see §3 Phase 1 for AI grounding test pattern (Prism::fake + real DB + assertion on grounded output).
+AI search has **two** test layers — use both, for different questions:
+
+**A. Prompt-assembly (Pest, in `composer test`, no API, no cost).** Proves the
+context sent to the model is correct: the right user's tasks, ISO dates, and the
+grounding contract present in the system prompt. Assert on the *input* axis, never
+on a `Prism::fake` answer (that tests the mock).
+
+- Render the prompt the way the service does: `view('prompts.garden-recall', ['tasks' => $tasks])->render()`, or inspect the assembled system prompt via `Prism::fake()->assertRequest(fn ($recorded) => ...)` over `$recorded[0]->systemPrompts()`.
+- Example: `tests/Unit/GardenRecallPromptTest.php` asserts the rendered prompt carries the grounding invariants (`NEVER invent`, `say so explicitly`, `YYYY-MM-DD`, `source of truth`) and renders a real task date in ISO form. Deleting the STRICT GROUNDING RULES block from the template turns it red — that is the regression it guards.
+
+**B. Live-model grounding (promptfoo, ad-hoc, real API).** Proves the *live model*
+honours the contract — the thing Pest structurally cannot prove. Lives in
+`tests/Evals/promptfoo/`.
+
+- **No drift, no mirror-test:** the eval drives the *real* prompt assembly + `AiRecallService` through an env-guarded HTTP route (`POST /eval/grounding`, registered only under `local|testing`, token-gated, seeds a transient user + tasks and rolls back). promptfoo's HTTP provider calls that route, so there is no hand-copied prompt to drift from production. `transformResponse: json.answer`.
+- **Adding a case** — append to `grounding-cases.yaml` under one of the three axes: *present-event* (cites the real `YYYY-MM-DD`), *absent-event* (explicit "not found", no fabricated date — keep the question date-free so a correct answer contains no ISO date), *partial-match* (uses only logged details; invents no variety/quantity). Use fixed ISO dates; make absent subjects provably absent from that case's log.
+- **Oracle for the judge:** promptfoo sends the `llm-rubric` judge ONLY the output + the rubric, NOT the task log. **Embed the log in each rubric** with `{{ tasks | dump }}` so the judge grades grounding against the real source — otherwise it cannot distinguish a quoted-from-log detail from an invention and will false-fail correct answers. Pair every rubric with ≥1 free deterministic guard (`contains` the real date / `not-contains` / `not-icontains`) and a `threshold` (we use 0.7).
+- **Run:** `npm run eval:grounding`, with the app served and these env set:
+  - `OPENROUTER_API_KEY` — subject calls (via the route) and the judge.
+  - `EVAL_ROUTE_TOKEN` — must match the app's value (sent as `X-Eval-Token`).
+  - `EVAL_BASE_URL` — optional; defaults to `http://localhost:8001` (Docker/nginx). Set to `http://localhost:8000` if serving via `composer dev`.
+- **Two environment gotchas (cost real time if missed):**
+  - **Node 22 LTS** — Node 26's experimental fetch decompression terminates the judge's gzip'd OpenRouter response (`TypeError: terminated` on a 200). Run the eval on Node 20.20+/22/24, not 26.
+  - **Port 8001** — the app serves on 8001 via Docker/nginx, not Laravel's 8000 default.
+- **Trusting the gate:** spot-check a few `reason` verdicts by hand (judge calibration), and run a sabotage check — weaken the template's grounding rules, re-run, confirm ≥1 case flips to FAIL — before relying on it. See `tests/Evals/promptfoo/README.md`.
 
 ### 6.5 Per-rollout-phase notes
 
 (After each phase lands, the final sub-phase appends a 2–3 line note here.)
+
+- **Phase 1 / Risk #1 — AI grounding (change `AI-tests`, 2026-06-07).** Closed the
+  two residual Pest gaps (grounding-contract-present + ISO-date-in-prompt) and added
+  the promptfoo live-model eval via an env-guarded `/eval/grounding` route. Key
+  lesson: the `llm-rubric` judge needs the task log embedded in the rubric
+  (`{{ tasks | dump }}`) or it false-fails correctly-grounded answers. Eval is
+  ad-hoc (real API) — not on every commit. Persistence (#2) and IDOR (#3) from this
+  rollout phase remain deferred (no research yet).
 
 ## 7. What We Deliberately Don't Test
 
