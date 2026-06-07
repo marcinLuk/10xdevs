@@ -235,5 +235,5 @@ None. PRD carried no unresolved open questions at time of generation.
 - **S-03: Task editing and deletion** — Archived 2026-06-07 → `context/archive/2026-05-28-task-edit-delete/`. PR #20. Lesson: —.
 - **S-05: Branding & navigation cleanup** — Archived 2026-06-07 → `context/archive/2026-05-28-branding-nav/`. PR #21. Lesson: —.
 - **S-06: Welcome page redesign** — Archived 2026-06-07 → `context/archive/2026-05-28-welcome-page/`. PR #22. Lesson: —.
-- **S-04: AI search UX polish** — Implemented — `context/changes/ai-search-ux/`. PR #23. Lesson: —.
+- **S-04: AI search UX polish** — Archived 2026-06-07 → `context/archive/2026-05-28-ai-search-ux/`. PR #23. Lesson: —.
 - **S-07: UI fixes round 1** — Implemented — `context/changes/ui-fixes-round-1/`. PR #24. Lesson: —.
