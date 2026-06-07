@@ -12,6 +12,13 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->trustProxies(at: '*');
+
+        // The non-prod /eval/grounding endpoint is called by promptfoo/curl with a
+        // shared token, not a browser session, so it carries no CSRF token. Exempt
+        // it (the route itself only exists under local|testing).
+        $middleware->validateCsrfTokens(except: [
+            'eval/grounding',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

@@ -409,28 +409,28 @@ changes — the eval route is unregistered outside `local`/`testing`.
 
 #### Automated
 
-- [x] 1.1 New tests pass: `php artisan test --filter=garden_recall`
-- [x] 1.2 Full suite green: `composer test`
-- [x] 1.3 Style clean: `./vendor/bin/pint --test`
-- [x] 1.4 Deleting STRICT GROUNDING RULES makes contract test red; revert makes it green
+- [x] 1.1 New tests pass: `php artisan test --filter=garden_recall` — db5741e
+- [x] 1.2 Full suite green: `composer test` — db5741e
+- [x] 1.3 Style clean: `./vendor/bin/pint --test` — db5741e
+- [x] 1.4 Deleting STRICT GROUNDING RULES makes contract test red; revert makes it green — db5741e
 
 #### Manual
 
-- [x] 1.5 Contract test asserts on stable intention-revealing substrings, not a whole-template snapshot
+- [x] 1.5 Contract test asserts on stable intention-revealing substrings, not a whole-template snapshot — db5741e
 
 ### Phase 2: Env-Guarded Eval Route
 
 #### Automated
 
-- [ ] 2.1 Correct-token request (local/testing) returns 200 + `{answer}` (faked)
-- [ ] 2.2 Missing/wrong token returns 403
-- [ ] 2.3 No eval-payload `User`/`Task` rows remain after the request (rollback verified)
-- [ ] 2.4 Style clean + suite green: `./vendor/bin/pint --test` && `composer test`
+- [x] 2.1 Correct-token request (local/testing) returns 200 + `{answer}` (faked)
+- [x] 2.2 Missing/wrong token returns 403
+- [x] 2.3 No eval-payload `User`/`Task` rows remain after the request (rollback verified)
+- [x] 2.4 Style clean + suite green: `./vendor/bin/pint --test` && `composer test`
 
 #### Manual
 
-- [ ] 2.5 Local `curl` with real key returns a grounded answer
-- [ ] 2.6 Route absent under production-like env (`route:list` shows no `eval/grounding`)
+- [x] 2.5 Local `curl` with real key returns a grounded answer
+- [x] 2.6 Route absent under production-like env (`route:list` shows no `eval/grounding`)
 
 ### Phase 3: promptfoo Setup + Grounding Eval
 

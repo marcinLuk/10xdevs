@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AiRecallController;
 use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\EvalGroundingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
@@ -22,5 +23,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::put('password', [PasswordController::class, 'update'])->name('password.update');
 });
+
+// Non-production grounding eval endpoint for promptfoo. Registered ONLY under
+// local|testing so it can never run real model calls or accept seed data in
+// production; the controller additionally enforces an X-Eval-Token header.
+if (app()->environment(['local', 'testing'])) {
+    Route::post('/eval/grounding', [EvalGroundingController::class, 'handle'])->name('eval.grounding');
+}
 
 require __DIR__.'/auth.php';

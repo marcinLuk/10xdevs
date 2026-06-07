@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'eval' => [
+        // Shared secret for the non-prod /eval/grounding promptfoo endpoint.
+        'token' => env('EVAL_ROUTE_TOKEN'),
+    ],
+
 ];
