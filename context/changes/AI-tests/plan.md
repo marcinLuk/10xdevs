@@ -409,14 +409,14 @@ changes — the eval route is unregistered outside `local`/`testing`.
 
 #### Automated
 
-- [ ] 1.1 New tests pass: `php artisan test --filter=garden_recall`
-- [ ] 1.2 Full suite green: `composer test`
-- [ ] 1.3 Style clean: `./vendor/bin/pint --test`
-- [ ] 1.4 Deleting STRICT GROUNDING RULES makes contract test red; revert makes it green
+- [x] 1.1 New tests pass: `php artisan test --filter=garden_recall`
+- [x] 1.2 Full suite green: `composer test`
+- [x] 1.3 Style clean: `./vendor/bin/pint --test`
+- [x] 1.4 Deleting STRICT GROUNDING RULES makes contract test red; revert makes it green
 
 #### Manual
 
-- [ ] 1.5 Contract test asserts on stable intention-revealing substrings, not a whole-template snapshot
+- [x] 1.5 Contract test asserts on stable intention-revealing substrings, not a whole-template snapshot
 
 ### Phase 2: Env-Guarded Eval Route
 
