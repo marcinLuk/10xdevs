@@ -1,10 +1,10 @@
 ---
 change_id: task-log-core
 title: Task log core
-status: impl_reviewed
+status: archived
 created: 2026-05-26
-updated: 2026-05-26
-archived_at: null
+updated: 2026-06-07
+archived_at: 2026-06-07T09:27:38Z
 ---
 
 ## Notes

@@ -1,9 +1,10 @@
 ---
 id: welcome-page
 title: Welcome Page
-status: planned
+status: archived
+archived_at: 2026-06-07T09:29:18Z
 created: 2026-05-28
-updated: 2026-05-28
+updated: 2026-06-07
 roadmap_ref: S-06
 ---
 

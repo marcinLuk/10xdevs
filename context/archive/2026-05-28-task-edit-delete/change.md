@@ -1,9 +1,10 @@
 ---
 id: task-edit-delete
 title: Task editing and deletion
-status: planned
+status: archived
+archived_at: 2026-06-07T09:28:13Z
 created: 2026-05-28
-updated: 2026-05-28
+updated: 2026-06-07
 roadmap: S-03
 prd_refs: FR-007, FR-008
 ---

@@ -1,10 +1,10 @@
 ---
 change_id: ai-recall-loop
 title: AI recall loop
-status: impl_reviewed
+status: archived
 created: 2026-05-27
-updated: 2026-05-28
-archived_at: null
+updated: 2026-06-07
+archived_at: 2026-06-07T09:15:42Z
 ---
 
 ## Notes

@@ -1,10 +1,10 @@
 ---
 change_id: AI-tests
 title: AI grounding tests + promptfoo setup
-status: implemented
+status: archived
 created: 2026-06-01
 updated: 2026-06-07
-archived_at: null
+archived_at: 2026-06-07T09:33:10Z
 ---
 
 ## Notes
