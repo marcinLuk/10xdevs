@@ -422,28 +422,28 @@ changes — the eval route is unregistered outside `local`/`testing`.
 
 #### Automated
 
-- [x] 2.1 Correct-token request (local/testing) returns 200 + `{answer}` (faked)
-- [x] 2.2 Missing/wrong token returns 403
-- [x] 2.3 No eval-payload `User`/`Task` rows remain after the request (rollback verified)
-- [x] 2.4 Style clean + suite green: `./vendor/bin/pint --test` && `composer test`
+- [x] 2.1 Correct-token request (local/testing) returns 200 + `{answer}` (faked) — f6e0433
+- [x] 2.2 Missing/wrong token returns 403 — f6e0433
+- [x] 2.3 No eval-payload `User`/`Task` rows remain after the request (rollback verified) — f6e0433
+- [x] 2.4 Style clean + suite green: `./vendor/bin/pint --test` && `composer test` — f6e0433
 
 #### Manual
 
-- [x] 2.5 Local `curl` with real key returns a grounded answer
-- [x] 2.6 Route absent under production-like env (`route:list` shows no `eval/grounding`)
+- [x] 2.5 Local `curl` with real key returns a grounded answer — f6e0433
+- [x] 2.6 Route absent under production-like env (`route:list` shows no `eval/grounding`) — f6e0433
 
 ### Phase 3: promptfoo Setup + Grounding Eval
 
 #### Automated
 
-- [ ] 3.1 `npm run eval:grounding` runs end-to-end and prints a per-case pass/fail table
-- [ ] 3.2 promptfoo installed and config validates with no schema errors
+- [x] 3.1 `npm run eval:grounding` runs end-to-end and prints a per-case pass/fail table
+- [x] 3.2 promptfoo installed and config validates with no schema errors
 
 #### Manual
 
-- [ ] 3.3 All golden cases pass against `anthropic/claude-sonnet-4.5`
-- [ ] 3.4 Sabotage check: weakening grounding rules flips ≥1 case to fail
-- [ ] 3.5 Judge calibration: 2–3 rubric verdicts agree with a human reading
+- [x] 3.3 All golden cases pass against `anthropic/claude-sonnet-4.5`
+- [x] 3.4 Sabotage check: weakening grounding rules flips ≥1 case to fail
+- [x] 3.5 Judge calibration: 2–3 rubric verdicts agree with a human reading
 
 ### Phase 4: Docs & Cookbook Sync
 

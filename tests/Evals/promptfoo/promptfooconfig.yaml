@@ -1,0 +1,48 @@
+# yaml-language-server: $schema=https://promptfoo.dev/config-schema.json
+description: >
+  AI grounding eval (Risk #1) — proves the LIVE OpenRouter model honours the
+  grounding contract: it cites only dates/events present in the gardener's task
+  log and says "not found" when there is no match. This is the thing Pest
+  structurally cannot prove; here we drive the REAL prompt assembly + service
+  through the env-guarded /eval/grounding route and grade each answer.
+#
+# Required env before running:
+#   OPENROUTER_API_KEY   — subject calls (via the eval route) AND the llm-rubric judge
+#   EVAL_ROUTE_TOKEN     — must match the app's EVAL_ROUTE_TOKEN (X-Eval-Token header)
+#   EVAL_BASE_URL        — optional; base URL of the served app. Default is the
+#                          Docker/nginx stack (http://localhost:8001). Set it to
+#                          http://localhost:8000 if you serve via `composer dev`.
+#
+# Run:  npm run eval:grounding   (from the project root, with the app served)
+
+prompts:
+  # The real system prompt is assembled SERVER-SIDE by AiRecallService + the
+  # garden-recall Blade template. This passthrough only carries the question;
+  # the HTTP body below sends question + tasks to the eval route, so there is no
+  # hand-copied prompt here to drift from production.
+  - '{{question}}'
+
+providers:
+  - id: https
+    label: garden-recall-eval-route
+    config:
+      url: '{{ env.EVAL_BASE_URL or "http://localhost:8001" }}/eval/grounding'
+      method: POST
+      headers:
+        Content-Type: application/json
+        X-Eval-Token: '{{ env.EVAL_ROUTE_TOKEN }}'
+      body:
+        question: '{{ question }}'
+        # `dump` serialises the YAML list into a real JSON array in the body
+        # (any valid JSON string in `body` is parsed back to an object/array).
+        tasks: '{{ tasks | dump }}'
+      # The route responds { "answer": <string>, "ok": <bool> }; grade the answer.
+      transformResponse: 'json.answer'
+
+defaultTest:
+  options:
+    # Judge model for every llm-rubric assertion (a second OpenRouter call).
+    # Configurable — swap for an independent model to reduce self-grading bias.
+    provider: openrouter:anthropic/claude-sonnet-4.5
+
+tests: file://grounding-cases.yaml
