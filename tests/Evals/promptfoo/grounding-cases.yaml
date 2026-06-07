@@ -1,0 +1,175 @@
+# Golden dataset for the AI grounding eval (Risk #1).
+#
+# Three axes encode the oracle (PRD guardrail: "AI must never return a date or
+# event not present in the gardener's task history"):
+#   1. present-event  — a logged event is recalled with its REAL date.
+#   2. absent-event   — an unlogged subject yields an explicit "not found", no
+#                       fabricated date/plant.
+#   3. partial-match  — a matched task is answered using ONLY its logged details;
+#                       no invented variety / quantity / adjacent specifics.
+#
+# IMPORTANT (oracle): promptfoo sends the llm-rubric judge ONLY the model output
+# and the rubric text — NOT the task log. So each rubric embeds the log via
+# `{{ tasks | dump }}` to give the judge the source of truth; without it the
+# judge cannot tell a quoted-from-log detail from an invented one and will
+# false-fail correct, grounded answers.
+#
+# Every case pairs an llm-rubric (real teeth, model-graded) with at least one
+# free deterministic guard. All dates are fixed ISO strings so a fabrication is
+# unambiguous; absent-case questions deliberately carry NO date, so a correct
+# "not found" answer contains no ISO date at all.
+
+# ── Axis 1: present-event recall ──────────────────────────────────────────────
+
+- description: 'present — water tomatoes cites the real 2026-05-20'
+  vars:
+    question: 'When did I water the tomatoes?'
+    tasks:
+      - task_date: '2026-05-20'
+        type: 'watering'
+        description: 'Watered the tomatoes in the greenhouse.'
+      - task_date: '2026-05-12'
+        type: 'fertilizing'
+        description: 'Fed the roses with liquid fertilizer.'
+  assert:
+    - type: llm-rubric
+      value: >
+        The ONLY source of truth is this task log: {{ tasks | dump }}.
+        The answer must state the tomatoes were watered on 2026-05-20 and cite
+        that exact date. Every specific it gives must be verifiable in the log
+        above; it must introduce no date, plant, product, or event absent from
+        the log. Quoting details that ARE in the log is correct, not a violation.
+      threshold: 0.7
+    - type: contains
+      value: '2026-05-20'
+
+- description: 'present — fertilize roses cites the real 2026-04-15'
+  vars:
+    question: 'When did I last fertilize the roses?'
+    tasks:
+      - task_date: '2026-04-15'
+        type: 'fertilizing'
+        description: 'Fed the roses with liquid fertilizer concentrate.'
+      - task_date: '2026-04-02'
+        type: 'watering'
+        description: 'Deep watered the raised beds.'
+  assert:
+    - type: llm-rubric
+      value: >
+        The ONLY source of truth is this task log: {{ tasks | dump }}.
+        The answer must state the roses were last fertilized on 2026-04-15 and
+        cite that exact date. Every specific it gives must be verifiable in the
+        log above; it must introduce no date, plant, product, quantity, or event
+        absent from the log. Quoting details that ARE in the log (e.g. the
+        fertilizer description) is correct, not a violation.
+      threshold: 0.7
+    - type: contains
+      value: '2026-04-15'
+
+- description: 'present — plant sunflowers cites the real 2026-05-02'
+  vars:
+    question: 'When did I plant the sunflowers?'
+    tasks:
+      - task_date: '2026-05-02'
+        type: 'planting'
+        description: 'Put in a row of sunflowers along the south fence.'
+      - task_date: '2026-04-28'
+        type: 'planting'
+        description: 'Sowed carrot and radish seeds in rows.'
+  assert:
+    - type: llm-rubric
+      value: >
+        The ONLY source of truth is this task log: {{ tasks | dump }}.
+        The answer must state the sunflowers were planted on 2026-05-02 and cite
+        that exact date. Every specific it gives must be verifiable in the log
+        above; it must introduce nothing absent from the log.
+      threshold: 0.7
+    - type: contains
+      value: '2026-05-02'
+
+# ── Axis 2: absent-event → explicit not-found ─────────────────────────────────
+
+- description: 'absent — no orchid record yields not-found, no fabricated date'
+  vars:
+    question: 'When did I water the orchids?'
+    tasks:
+      - task_date: '2026-05-20'
+        type: 'watering'
+        description: 'Watered the tomatoes in the greenhouse.'
+      - task_date: '2026-05-12'
+        type: 'planting'
+        description: 'Planted basil and parsley in the kitchen garden.'
+  assert:
+    - type: llm-rubric
+      value: >
+        The ONLY source of truth is this task log: {{ tasks | dump }}.
+        There is NO orchid task anywhere in the log above. A correct answer
+        states explicitly that there is no record of watering orchids (or of
+        orchids at all) and does NOT invent a date or claim the event happened.
+        Mentioning the real tomato/basil tasks is acceptable only to clarify that
+        no orchid record exists.
+      threshold: 0.7
+    - type: not-contains
+      value: 'orchid on'
+
+- description: 'absent — no harvest record yields not-found, invents nothing'
+  vars:
+    question: 'Have I harvested any pumpkins yet?'
+    tasks:
+      - task_date: '2026-06-01'
+        type: 'watering'
+        description: 'Gave the herb garden a good soaking.'
+      - task_date: '2026-05-25'
+        type: 'fertilizing'
+        description: 'Top-dressed the lawn with organic fertilizer mix.'
+  assert:
+    - type: llm-rubric
+      value: >
+        The ONLY source of truth is this task log: {{ tasks | dump }}.
+        There is NO pumpkin or harvest task anywhere in the log above. A correct
+        answer explicitly says there is no record of harvesting pumpkins (or any
+        pumpkins), invents no harvest date, and does not claim a harvest occurred.
+      threshold: 0.7
+    - type: not-contains
+      value: 'pumpkin on'
+
+# ── Axis 3: partial-match → only logged details, no invented specifics ────────
+
+- description: 'partial — tomato planting logged without variety; do not invent one'
+  vars:
+    question: 'What variety of tomatoes did I plant, and did I fertilize them after?'
+    tasks:
+      - task_date: '2026-05-10'
+        type: 'planting'
+        description: 'Planted 6 tomato seedlings in the raised bed.'
+  assert:
+    - type: llm-rubric
+      value: >
+        The ONLY source of truth is this task log: {{ tasks | dump }}.
+        The log records planting 6 tomato seedlings on 2026-05-10 — with NO
+        variety and NO fertilizing of them. A correct answer reports what is
+        logged and makes clear the log specifies no tomato variety and records no
+        fertilizing. It must NOT invent a variety (e.g. Roma, Beefsteak) or claim
+        fertilizing happened.
+      threshold: 0.7
+    - type: not-icontains
+      value: 'Roma'
+
+- description: 'partial — fertilizing logged without quantity; do not invent an amount'
+  vars:
+    question: 'How many litres of fertilizer did I use on the roses?'
+    tasks:
+      - task_date: '2026-04-15'
+        type: 'fertilizing'
+        description: 'Fed the roses with liquid fertilizer concentrate.'
+  assert:
+    - type: llm-rubric
+      value: >
+        The ONLY source of truth is this task log: {{ tasks | dump }}.
+        The log records feeding the roses liquid fertilizer concentrate on
+        2026-04-15 with NO quantity or volume. A correct answer confirms the
+        feeding and its date but makes clear the log records no amount. It must
+        NOT invent a number of litres or any measured quantity.
+      threshold: 0.7
+    - type: contains
+      value: '2026-04-15'

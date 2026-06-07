@@ -7,6 +7,9 @@
 # IDE
 .idea/
 
+# Local REST-client scratch files (manual endpoint testing)
+tests/*.http
+
 # Claude Code
 .claude/
 
