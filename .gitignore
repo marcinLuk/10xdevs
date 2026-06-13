@@ -11,7 +11,9 @@
 tests/*.http
 
 # Claude Code
-.claude/
+.claude/settings.json
+.claude/worktrees/
+.claude/.10x-cli-manifest.json
 
 # Laravel
 vendor/
