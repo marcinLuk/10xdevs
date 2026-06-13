@@ -1,0 +1,52 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "Bash(node *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git status *)",
+      "Bash(git branch *)",
+      "Bash(git checkout *)",
+      "Bash(git stash *)",
+      "Read",
+      "Edit",
+      "Write"
+    ],
+    "ask": [
+      "Bash(curl *)",
+      "Bash(wget *)",
+      "Bash(git push *)",
+      "Bash(git push)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "bash",
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" || exit 0; F=$(jq -r '.tool_input.file_path // empty'); F=\"${F//\\\\//}\"; case \"$F\" in *.php) ;; *) exit 0;; esac; case \"$F\" in */vendor/*) exit 0;; esac; out=$(./vendor/bin/pint --test \"$F\" 2>&1) || { echo \"$out\" >&2; exit 2; }",
+            "timeout": 30,
+            "statusMessage": "Pint: checking edited PHP file..."
+          },
+          {
+            "type": "command",
+            "shell": "bash",
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" || exit 0; F=$(jq -r '.tool_input.file_path // empty'); F=\"${F//\\\\//}\"; case \"$F\" in */app/*|*/database/*|*/routes/*) ;; *) exit 0;; esac; out=$(./vendor/bin/phpstan analyse \"$F\" --no-progress --memory-limit=2G 2>&1) || { echo \"$out\" >&2; exit 2; }",
+            "timeout": 30,
+            "statusMessage": "PHPStan: analysing edited PHP file..."
+          }
+        ]
+      }
+    ]
+  }
+}
