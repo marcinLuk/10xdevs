@@ -49,3 +49,12 @@ _ide_helper.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
+.playwright-cli
+/playwright/.auth/user.json
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
