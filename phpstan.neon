@@ -1,0 +1,13 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    level: 6
+
+    paths:
+        - app/
+        - database/
+        - routes/
+
+    # Larastan boots the app container to resolve runtime types.
+    # Keep the analysed surface to first-party code.
