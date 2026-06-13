@@ -10,15 +10,53 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.4'
+        extensions: mbstring, bcmath, intl, pdo_sqlite, sqlite3
+        coverage: none
+
+    - name: Setup Node
+      uses: actions/setup-node@v4
       with:
         node-version: lts/*
-    - name: Install dependencies
+        cache: npm
+
+    - name: Prepare environment file
+      run: |
+        cp .env.example .env
+        # CI serves the app over plain HTTP, so a secure-only session cookie
+        # would never be stored and login would silently fail — disable it.
+        sed -i 's|^SESSION_SECURE_COOKIE=.*|SESSION_SECURE_COOKIE=false|' .env
+        # Use a file-based SQLite DB in CI instead of MySQL.
+        sed -i 's|^DB_CONNECTION=.*|DB_CONNECTION=sqlite|' .env
+        sed -i "s|^DB_DATABASE=.*|DB_DATABASE=${GITHUB_WORKSPACE}/database/database.sqlite|" .env
+        sed -i 's|^APP_URL=.*|APP_URL=http://localhost:8001|' .env
+        touch database/database.sqlite
+
+    - name: Install PHP dependencies
+      run: composer install --no-interaction --prefer-dist --no-progress
+
+    - name: Install Node dependencies
       run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
+
+    - name: Generate application key
+      run: php artisan key:generate
+
+    - name: Build frontend assets
+      run: npm run build
+
+    - name: Migrate and seed database
+      run: php artisan migrate --seed --force
+
+    - name: Install Playwright browsers
+      run: npx playwright install --with-deps chromium
+
     - name: Run Playwright tests
       run: npx playwright test
+
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:

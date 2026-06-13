@@ -84,10 +84,14 @@ export default defineConfig({
         // },
     ],
 
-    /* Run your local dev server before starting the tests */
-    // webServer: {
-    //   command: 'npm run start',
-    //   url: 'http://localhost:3000',
-    //   reuseExistingServer: !process.env.CI,
-    // },
+    /* Boot the Laravel app before the tests run. In CI this starts a fresh
+     * `php artisan serve` on :8001 and waits for it; locally it reuses an
+     * already-running server (e.g. the Docker/nginx stack on :8001) rather than
+     * starting a second one. The DB must already be migrated + seeded. */
+    webServer: {
+        command: 'php artisan serve --port=8001',
+        url: 'http://localhost:8001',
+        reuseExistingServer: !process.env.CI,
+        timeout: 120 * 1000,
+    },
 });
